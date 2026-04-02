@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Plus, Download, History, CreditCard, Gift, Send } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Plus, History, CreditCard, Gift, Send, Wallet as WalletIcon, TrendingUp, TrendingDown } from 'lucide-react';
+import BottomNavbar from '../components/BottomNavbar';
 
 const Wallet = () => {
   const navigate = useNavigate();
@@ -26,49 +27,49 @@ const Wallet = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] max-w-lg mx-auto flex flex-col font-sans mb-32">
+    <div className="min-h-screen bg-bg-light max-w-lg mx-auto flex flex-col font-sans pb-32">
       {/* ADD MONEY MODAL */}
       <AnimatePresence>
         {showAddMoney && (
-          <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="fixed inset-0 z-[100] flex items-end justify-center bg-[#001b33]/60 backdrop-blur-md p-4">
             <motion.div 
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
-              className="bg-white w-full max-w-md rounded-[32px] p-8 pb-10 space-y-8 shadow-2xl relative"
+              className="bg-white w-full max-w-md rounded-[40px] p-8 pb-12 space-y-8 shadow-2xl relative"
             >
               <button 
                 onClick={() => setShowAddMoney(false)}
-                className="absolute top-6 right-6 w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-gray-400 active:scale-90"
+                className="absolute top-6 right-6 w-11 h-11 bg-gray-50 rounded-2xl flex items-center justify-center text-gray-400 active:scale-90 transition-all hover:bg-red-50 hover:text-red-500"
               >
-                <Plus size={20} className="rotate-45" />
+                <Plus size={22} className="rotate-45" />
               </button>
 
               <div className="text-center space-y-2">
-                <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tight">Add Money</h3>
-                <p className="text-[12px] font-bold text-gray-400 tracking-widest uppercase">Select amount to top-up</p>
+                <h3 className="text-2xl font-bold text-[#001b33] tracking-tight">Refill Wallet</h3>
+                <p className="text-[12px] font-bold text-gray-400 tracking-widest uppercase">Increase your liquidity</p>
               </div>
 
               {isSuccess ? (
-                <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="flex flex-col items-center py-8 gap-4">
-                  <div className="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center shadow-inner">
-                    <History size={40} strokeWidth={3} />
+                <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="flex flex-col items-center py-8 gap-5">
+                  <div className="w-24 h-24 bg-green-50 text-green-500 rounded-[40px] flex items-center justify-center shadow-xl">
+                    <History size={48} strokeWidth={2.5} />
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-black text-gray-900 leading-none">Wallet Refilled!</p>
-                    <p className="text-[11px] font-bold text-gray-400 mt-2 uppercase tracking-widest">Balance updated successfully</p>
+                    <p className="text-xl font-bold text-[#001b33] leading-none">Success!</p>
+                    <p className="text-[13px] font-medium text-gray-400 mt-2">Your balance has been updated</p>
                   </div>
                 </motion.div>
               ) : (
                 <div className="space-y-8">
                   <div className="relative group">
-                    <span className="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-black text-gray-400 group-focus-within:text-orange-500 transition-colors">₹</span>
+                    <span className="absolute left-7 top-1/2 -translate-y-1/2 text-2xl font-bold text-gray-300 group-focus-within:text-accent transition-colors">₹</span>
                     <input 
                        type="number"
                        value={amount}
                        onChange={(e) => setAmount(e.target.value)}
                        placeholder="0.00"
-                       className="w-full h-20 bg-gray-50 border-2 border-gray-100 rounded-[24px] pl-12 pr-6 text-3xl font-black text-gray-900 focus:outline-none focus:border-orange-500/30 transition-all text-center placeholder:text-gray-200"
+                       className="w-full h-24 bg-gray-50/50 border-2 border-gray-100 rounded-[32px] pl-14 pr-8 text-4xl font-bold text-[#001b33] focus:outline-none focus:border-accent/30 transition-all text-center placeholder:text-gray-200"
                     />
                   </div>
 
@@ -77,8 +78,8 @@ const Wallet = () => {
                       <button 
                         key={val}
                         onClick={() => setAmount(val)}
-                        className={`py-3 rounded-2xl font-black text-[13px] border-2 transition-all ${
-                          amount === val ? 'bg-orange-500 border-orange-500 text-white shadow-lg shadow-orange-200' : 'bg-white border-gray-100 text-gray-500'
+                        className={`py-4 rounded-2xl font-bold text-[14px] border-2 transition-all ${
+                          amount === val ? 'bg-accent border-accent text-white shadow-xl shadow-accent/20 scale-105' : 'bg-white border-gray-100 text-gray-400'
                         }`}
                       >
                         +₹{val}
@@ -89,12 +90,12 @@ const Wallet = () => {
                   <button 
                     onClick={handleAddMoney}
                     disabled={isAdding || !amount}
-                    className={`w-full h-16 rounded-[24px] font-black text-[15px] uppercase tracking-widest shadow-xl transition-all flex items-center justify-center gap-3 active:scale-95 ${
-                      isAdding ? 'bg-gray-100 text-gray-300 shadow-none' : 'bg-orange-500 text-white shadow-orange-200'
+                    className={`w-full h-18 rounded-[32px] font-bold text-[16px] uppercase tracking-widest shadow-2xl transition-all flex items-center justify-center gap-3 active:scale-95 ${
+                      isAdding ? 'bg-gray-100 text-gray-300' : 'bg-[#001b33] text-white hover:bg-[#003366]'
                     }`}
                   >
                     {isAdding ? 'Processing...' : (
-                      <>Refill Wallet <Plus size={20} strokeWidth={3} /></>
+                      <>Refill Now <Plus size={22} strokeWidth={3} /></>
                     )}
                   </button>
                 </div>
@@ -104,138 +105,132 @@ const Wallet = () => {
         )}
       </AnimatePresence>
 
-      {/* HEADER */}
-      <header className="bg-white px-5 pt-12 pb-6 flex items-center gap-4 sticky top-0 z-20 border-b border-gray-50/20">
-        <button 
-          onClick={() => navigate(-1)}
-          className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center active:scale-95 transition-transform"
-        >
-          <ArrowLeft size={20} className="text-gray-900" strokeWidth={2.5} />
-        </button>
-        <h1 className="text-[19px] font-black text-gray-900 tracking-tight">My Wallet</h1>
+      {/* HEADER (Completely Compact) */}
+      <header className="bg-[#001b33] px-5 py-4 flex items-center gap-4 sticky top-0 z-40 shadow-2xl border-b border-white/5 shrink-0 overflow-hidden">
+         <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+         <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center active:scale-95 transition-all text-white border border-white/10 relative z-10">
+            <ArrowLeft size={16} strokeWidth={3} />
+         </button>
+         <div className="relative z-10">
+            <h1 className="text-[9px] font-bold text-white/30 uppercase tracking-[2.5px] leading-none mb-1 opacity-80">Security Bank</h1>
+            <h2 className="text-[17px] font-bold text-white tracking-tight leading-none uppercase">MY WALLET</h2>
+         </div>
       </header>
 
-      {/* BALANCE CARD */}
-      <div className="px-5 mt-4">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-[36px] p-8 text-white shadow-2xl relative overflow-hidden group"
-        >
-          <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full blur-[80px] -mr-32 -mt-32 group-hover:bg-orange-500/20 transition-colors"></div>
-          
-          <div className="relative z-10 flex flex-col gap-8">
-            <div className="space-y-1">
-              <p className="text-white/30 font-black uppercase tracking-[0.2em] text-[8px]">Current Liquidity</p>
-              <h2 className="text-4xl font-black tracking-tighter">₹1,250<span className="text-white/20 text-2xl">.00</span></h2>
-            </div>
-            
-            <div className="flex items-center gap-3">
-              <button 
-                onClick={() => setShowAddMoney(true)}
-                className="flex-1 bg-orange-500 text-white h-14 rounded-2xl font-black text-[13px] uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 transition-all shadow-lg shadow-orange-500/20 active:shadow-none"
-              >
-                <Plus size={16} strokeWidth={3} />
-                Refill
-              </button>
-              <button 
-                onClick={() => navigate('/activity')}
-                className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white active:scale-95 transition-all hover:bg-white/10"
-              >
-                <History size={20} strokeWidth={2.5} />
-              </button>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* QUICK ACTIONS */}
-      <div className="px-5 mt-8 grid grid-cols-3 gap-3">
-         <div className="bg-white border border-gray-100 rounded-[28px] p-5 flex flex-col items-center justify-center gap-3 shadow-sm cursor-pointer active:scale-95 transition-all hover:border-blue-100 group">
-            <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-sm">
-               <Send size={20} strokeWidth={2.5} />
-            </div>
-            <span className="text-[11px] font-black text-gray-700 uppercase tracking-widest">Send</span>
-         </div>
-         <div className="bg-white border border-gray-100 rounded-[28px] p-5 flex flex-col items-center justify-center gap-3 shadow-sm cursor-pointer active:scale-95 transition-all hover:border-green-100 group">
-            <div className="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center group-hover:bg-green-600 group-hover:text-white transition-colors shadow-sm">
-               <Download size={20} strokeWidth={2.5} />
-            </div>
-            <span className="text-[11px] font-black text-gray-700 uppercase tracking-widest">Receive</span>
-         </div>
-         <div 
-            onClick={() => navigate('/profile/payments')}
-            className="bg-white border border-gray-100 rounded-[28px] p-5 flex flex-col items-center justify-center gap-3 shadow-sm cursor-pointer active:scale-95 transition-all hover:border-purple-100 group"
-         >
-            <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors shadow-sm">
-               <CreditCard size={20} strokeWidth={2.5} />
-            </div>
-            <span className="text-[11px] font-black text-gray-700 uppercase tracking-widest">Cards</span>
-         </div>
-      </div>
-
-      {/* PROMO */}
-      <div className="px-5 mt-8">
-         <div 
-            onClick={() => navigate('/taxi/driver/referral')}
-            className="bg-gradient-to-r from-orange-50 to-white border border-orange-100 rounded-[32px] p-6 flex items-center gap-5 cursor-pointer active:scale-98 transition-all shadow-sm group"
-         >
-            <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-orange-500 shadow-xl shadow-orange-100 group-hover:bg-orange-500 group-hover:text-white transition-all shrink-0 border border-orange-50">
-               <Gift size={24} strokeWidth={2.5} />
-            </div>
-            <div className="flex-1">
-               <h4 className="text-[15px] font-black text-gray-900 tracking-tight">Refer & Earn ₹50</h4>
-               <p className="text-[11px] font-bold text-gray-400 mt-0.5 uppercase tracking-wider">Invite friends to Redigo</p>
-            </div>
-            <ArrowLeft size={20} className="text-orange-200 rotate-180 group-hover:text-orange-500 transition-colors" />
-         </div>
-      </div>
-
-      {/* RECENT TRANSACTIONS */}
-      <div className="px-5 mt-10">
-         <div className="flex items-center justify-between mb-6 px-1">
-            <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-widest leading-none">History Log</h3>
-            <button onClick={() => navigate('/activity')} className="text-[10px] font-black text-orange-500 uppercase tracking-wider">View All</button>
-         </div>
-         <div className="bg-white rounded-[36px] border border-gray-50 shadow-sm p-3 flex flex-col gap-2">
-            <div 
-                onClick={() => navigate('/ride/detail/8231')}
-                className="flex items-center gap-4 p-4 rounded-[28px] hover:bg-gray-50 cursor-pointer transition-all active:scale-[0.99] group"
+      <div className="flex-1 overflow-y-auto no-scrollbar space-y-6 pb-24">
+         {/* BALANCE CARD (Refined & Compact) */}
+         <div className="px-4 mt-5">
+            <motion.div 
+               initial={{ opacity: 0, scale: 0.95 }}
+               animate={{ opacity: 1, scale: 1 }}
+               className="bg-gradient-to-br from-[#003366] via-[#001b33] to-[#000d1a] rounded-[36px] p-8 text-white shadow-2xl relative overflow-hidden group border border-white/10"
             >
-               <div className="w-12 h-12 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                  <ArrowLeft size={20} strokeWidth={3} className="rotate-45" />
-               </div>
-               <div className="flex-1 min-w-0">
-                  <h4 className="text-[15px] font-black text-gray-900 truncate tracking-tight">Ride to Airport</h4>
-                  <p className="text-[11px] font-bold text-gray-400 mt-1 uppercase tracking-widest">Today, 10:24 AM</p>
-               </div>
-               <div className="text-right shrink-0">
-                  <h4 className="text-[16px] font-black text-gray-900 tracking-tight">-₹450</h4>
-                  <div className="flex items-center gap-1 justify-end mt-0.5">
-                     <span className="text-[8px] font-black text-red-400 uppercase tracking-widest">Debit</span>
-                     <div className="w-1.5 h-1.5 bg-red-400 rounded-full"></div>
+               <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-[80px] -mr-32 -mt-32 transition-all duration-1000"></div>
+               
+               <div className="relative z-10 flex flex-col gap-8">
+                  <div className="flex justify-between items-start">
+                     <div className="space-y-1.5">
+                        <p className="text-white/30 font-bold uppercase tracking-[3px] text-[8px]">Available Liquidity</p>
+                        <h2 className="text-4xl font-bold tracking-tight">₹1,250<span className="text-white/20 text-2xl font-medium">.00</span></h2>
+                     </div>
+                     <div className="bg-white/5 w-10 h-10 rounded-xl backdrop-blur-md border border-white/10 flex items-center justify-center">
+                        <WalletIcon className="text-accent" size={20} />
+                     </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-3">
+                     <button 
+                        onClick={() => setShowAddMoney(true)}
+                        className="flex-3 bg-accent text-white h-13 rounded-[18px] font-bold text-[12px] uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 transition-all shadow-xl shadow-accent/20"
+                     >
+                        <Plus size={16} strokeWidth={3} />
+                        Refill
+                     </button>
+                     <button 
+                        onClick={() => navigate('/activity')}
+                        className="flex-1 h-13 bg-white/5 border border-white/10 rounded-[18px] flex items-center justify-center text-white active:scale-95 transition-all"
+                     >
+                        <History size={18} strokeWidth={2.5} />
+                     </button>
                   </div>
                </div>
-            </div>
+            </motion.div>
+         </div>
 
-            <div className="flex items-center gap-4 p-4 rounded-[28px] hover:bg-gray-50 cursor-pointer transition-all active:scale-[0.99] group">
-               <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                  <Plus size={20} strokeWidth={3} />
-               </div>
-               <div className="flex-1 min-w-0">
-                  <h4 className="text-[15px] font-black text-gray-900 truncate tracking-tight">Wallet Refilled</h4>
-                  <p className="text-[11px] font-bold text-gray-400 mt-1 uppercase tracking-widest">Yesterday, 04:12 PM</p>
-               </div>
-               <div className="text-right shrink-0">
-                  <h4 className="text-[16px] font-black text-emerald-600 tracking-tight">+₹1,000</h4>
-                  <div className="flex items-center gap-1 justify-end mt-0.5">
-                     <span className="text-[8px] font-black text-emerald-400 uppercase tracking-widest">Credit</span>
-                     <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+         {/* QUICK ACTIONS grid (Compact) */}
+         <div className="px-4 grid grid-cols-3 gap-3">
+            {[
+               { icon: <Send size={20} />, label: 'Send', color: 'accent', bg: 'accent/5' },
+               { icon: <Plus className="rotate-180" size={20} />, label: 'Receive', color: 'emerald-500', bg: 'emerald-50' },
+               { icon: <CreditCard size={20} />, label: 'Cards', color: 'blue-500', bg: 'blue-50', path: '/profile/payments' }
+            ].map((action, i) => (
+               <div 
+                  key={i}
+                  onClick={() => action.path && navigate(action.path)}
+                  className="bg-white border border-gray-50 rounded-[28px] p-5 flex flex-col items-center justify-center gap-3 shadow-sm cursor-pointer active:scale-95 transition-all group"
+               >
+                  <div className={`w-11 h-11 bg-${action.bg} text-${action.color} rounded-[14px] flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform`}>
+                     {action.icon}
                   </div>
+                  <span className="text-[10px] font-bold text-[#001b33] uppercase tracking-wider">{action.label}</span>
                </div>
+            ))}
+         </div>
+
+         {/* PROMO (Compact) */}
+         <div className="px-4">
+            <div 
+               onClick={() => navigate('/taxi/driver/referral')}
+               className="bg-[#001b33] border border-white/5 rounded-[32px] p-5 flex items-center gap-5 cursor-pointer active:scale-[0.98] transition-all shadow-xl relative overflow-hidden"
+            >
+               <div className="absolute top-0 right-0 w-24 h-24 bg-accent/10 rounded-full blur-2xl -mr-12 -mt-12"></div>
+               <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-accent border border-white/10 shrink-0">
+                  <Gift size={22} strokeWidth={2.5} />
+               </div>
+               <div className="flex-1">
+                  <h4 className="text-[15px] font-bold text-white tracking-tight">Refer & Earn ₹50</h4>
+                  <p className="text-[10px] font-bold text-white/30 uppercase tracking-[2px]">Invite and expand</p>
+               </div>
+               <ArrowLeft size={16} className="rotate-180 text-white/20" />
+            </div>
+         </div>
+
+         {/* HISTORY LOG (Tighter) */}
+         <div className="px-4 pt-2">
+            <div className="flex items-center justify-between mb-4 px-2">
+               <h3 className="text-[9px] font-bold text-gray-400 uppercase tracking-[0.25em]">Transaction History</h3>
+               <button onClick={() => navigate('/activity')} className="text-[9px] font-bold text-accent uppercase tracking-widest">See All</button>
+            </div>
+            <div className="space-y-3">
+               {[
+                  { title: 'Ride to Airport', time: '10:24 AM', amount: '-₹450', type: 'debit', icon: <TrendingDown size={18} />, color: 'red' },
+                  { title: 'Wallet Refilled', time: '04:12 PM', amount: '+₹1,000', type: 'credit', icon: <TrendingUp size={18} />, color: 'emerald' }
+               ].map((tx, i) => (
+                  <div 
+                     key={i}
+                     onClick={() => tx.type === 'debit' && navigate('/ride/detail/8231')}
+                     className="bg-white rounded-[24px] p-4 border border-gray-50 flex items-center gap-3 cursor-pointer active:scale-[0.99] transition-all"
+                  >
+                     <div className={`w-10 h-10 rounded-xl bg-${tx.color}-50 text-${tx.color}-500 flex items-center justify-center shrink-0`}>
+                        {tx.icon}
+                     </div>
+                     <div className="flex-1 min-w-0">
+                        <h4 className="text-[14px] font-bold text-[#001b33] truncate tracking-tight leading-none">{tx.title}</h4>
+                        <p className="text-[9px] font-bold text-gray-300 mt-1.5 uppercase tracking-widest">{tx.time}</p>
+                     </div>
+                     <div className="text-right">
+                        <h4 className={`text-[15px] font-bold ${tx.type === 'credit' ? 'text-emerald-500' : 'text-[#001b33]'} tracking-tight`}>{tx.amount}</h4>
+                        <div className={`flex items-center gap-1.5 justify-end mt-1 opacity-40`}>
+                           <span className="text-[8px] font-bold uppercase tracking-widest">OK</span>
+                           <div className={`w-1 h-1 bg-${tx.color}-500 rounded-full`}></div>
+                        </div>
+                     </div>
+                  </div>
+               ))}
             </div>
          </div>
       </div>
+      <BottomNavbar />
     </div>
   );
 };

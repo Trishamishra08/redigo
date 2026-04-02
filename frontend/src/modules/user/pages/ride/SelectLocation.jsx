@@ -93,216 +93,166 @@ const SelectLocation = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white max-w-lg mx-auto font-sans">
-
-      {/* Map Picker Toast */}
+    <div className="h-screen bg-bg-light max-w-lg mx-auto flex flex-col font-sans relative overflow-hidden">
+      {/* Map Picker Toast - Premium Styling */}
       <AnimatePresence>
         {mapToast && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-gray-900 text-white px-5 py-3 rounded-2xl text-sm font-black shadow-2xl whitespace-nowrap"
+            initial={{ opacity: 0, y: -20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.9 }}
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-[#001b33] text-white px-6 py-3 rounded-full text-[11px] font-bold shadow-2xl flex items-center gap-3 border border-white/10"
           >
-            🗺️ Map Picker — Coming Soon!
+            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+            <span className="uppercase tracking-[2px]">Map System — Activating soon</span>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Header */}
-      <div className="p-3 flex items-center gap-6">
-        <button onClick={() => navigate(-1)} className="p-2 -ml-2 active:scale-90 transition-all">
-          <ArrowLeft size={24} className="text-gray-900" strokeWidth={2.5} />
-        </button>
-        <h1 className="text-[20px] font-extrabold text-gray-900 tracking-tight">Where to?</h1>
-      </div>
+      {/* Header (Branded) */}
+      <header className="bg-[#001b33] px-5 py-5 flex items-center gap-4 border-b border-white/5 sticky top-0 z-30 shadow-2xl overflow-hidden shrink-0">
+         <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+         <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center active:scale-95 transition-all text-white relative z-10 font-bold">
+            <ArrowLeft size={16} strokeWidth={3} />
+         </button>
+         <div className="relative z-10">
+            <h1 className="text-[9px] font-bold text-white/30 uppercase tracking-[2px] leading-none mb-1 opacity-80">Route Planner</h1>
+            <h2 className="text-[17px] font-bold text-white leading-none tracking-tight uppercase">WHERE TO?</h2>
+         </div>
+      </header>
 
-      {/* Input Card */}
-      <div className="px-5">
-        <div className="bg-white rounded-[24px] p-3 shadow-[0_4px_30px_rgba(0,0,0,0.06)] border border-gray-100">
-          <div className="space-y-3">
-
-            {/* Pickup Row */}
-            <div className="flex items-center gap-3">
-              <div className="flex flex-col items-center gap-0.5 shrink-0">
-                <div className="w-5 h-5 rounded-full border-2 border-green-700 flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-700" />
-                </div>
-              </div>
-              <div
-                className={`flex-1 flex items-center bg-gray-50 rounded-xl px-3 py-2.5 transition-all ${activeInput === 'pickup' ? 'ring-2 ring-green-200' : ''}`}
-                onClick={() => setActiveInput('pickup')}
-              >
-                <input
-                  type="text"
-                  value={pickup}
-                  onChange={(e) => setPickup(e.target.value)}
-                  onFocus={() => setActiveInput('pickup')}
-                  placeholder="Your pickup location"
-                  className="w-full bg-transparent border-none text-[15px] font-bold text-gray-900 focus:outline-none placeholder:text-gray-300"
-                />
-                {pickup.length > 0 && (
-                  <button onClick={() => setPickup('')} className="ml-2 shrink-0">
-                    <X size={16} className="text-gray-300 hover:text-gray-600 transition-colors" />
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Dotted connector */}
-            <div className="ml-[9px] h-2 w-[1.5px] border-l-[1.5px] border-dotted border-gray-300" />
-
-            {/* Dynamic Stops */}
-            <AnimatePresence>
-              {stops.map((stop, idx) => (
-                <motion.div
-                  key={`stop-${idx}`}
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="overflow-hidden"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="flex flex-col items-center gap-0.5 shrink-0">
-                      <div className="w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center">
-                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                      </div>
-                    </div>
-                    <div
-                      className={`flex-1 flex items-center bg-blue-50 rounded-xl px-3 py-2.5 transition-all ${activeInput === idx ? 'ring-2 ring-blue-200' : ''}`}
-                      onClick={() => setActiveInput(idx)}
-                    >
-                      <input
-                        type="text"
-                        value={stop}
-                        autoFocus={activeInput === idx}
-                        placeholder={`Stop ${idx + 1} location...`}
-                        onFocus={() => setActiveInput(idx)}
-                        onChange={(e) => updateStop(idx, e.target.value)}
-                        className="w-full bg-transparent border-none text-[15px] font-bold text-gray-900 focus:outline-none placeholder:text-blue-300"
-                      />
-                      {stop.length > 0 && (
-                        <button onClick={() => updateStop(idx, '')} className="ml-2 shrink-0">
-                          <X size={16} className="text-blue-300 hover:text-blue-600 transition-colors" />
-                        </button>
-                      )}
-                    </div>
-                    <button
-                      onClick={() => removeStop(idx)}
-                      className="w-7 h-7 rounded-full bg-red-50 flex items-center justify-center shrink-0 active:scale-90 transition-all"
-                    >
-                      <Minus size={14} className="text-red-400" strokeWidth={3} />
-                    </button>
+      <div className="flex-1 overflow-y-auto no-scrollbar pb-24">
+         {/* Input Card (Refined & Compact) */}
+         <div className="px-4 mt-5">
+            <div className="bg-white rounded-[32px] p-5 shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-gray-50 space-y-4">
+               {/* Pickup Row */}
+               <div className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-full border-2 border-emerald-500 flex items-center justify-center shrink-0">
+                     <div className="w-2 h-2 rounded-full bg-emerald-500" />
                   </div>
-                  {/* Connector after each stop */}
-                  <div className="ml-[9px] mt-3 h-2 w-[1.5px] border-l-[1.5px] border-dotted border-gray-300" />
-                </motion.div>
-              ))}
-            </AnimatePresence>
+                  <div 
+                     className={`flex-1 flex items-center border rounded-[20px] px-4 py-3 transition-all ${activeInput === 'pickup' ? 'border-emerald-500/30 bg-emerald-50/10' : 'border-gray-50 bg-gray-50/30'}`}
+                     onClick={() => setActiveInput('pickup')}
+                  >
+                     <input
+                        type="text"
+                        value={pickup}
+                        onChange={(e) => setPickup(e.target.value)}
+                        placeholder="Your pickup location"
+                        className="w-full bg-transparent border-none text-[15px] font-bold text-[#001b33] focus:outline-none placeholder:text-gray-300"
+                     />
+                     {pickup.length > 0 && (
+                        <button onClick={() => setPickup('')} className="ml-2 text-gray-300 hover:text-gray-500"><X size={14} /></button>
+                     )}
+                  </div>
+               </div>
 
-            {/* Drop Row */}
-            <div className="flex items-center gap-3">
-              <div className="flex flex-col items-center gap-0.5 shrink-0">
-                <div className="w-5 h-5 rounded-full border-2 border-orange-600 flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 rounded-full bg-orange-600" />
-                </div>
-              </div>
-              <div
-                className={`flex-1 flex items-center bg-gray-50 rounded-xl px-3 py-2.5 transition-all ${activeInput === 'drop' ? 'ring-2 ring-orange-200' : ''}`}
-                onClick={() => setActiveInput('drop')}
-              >
-                <input
-                  type="text"
-                  value={drop}
-                  autoFocus={activeInput === 'drop'}
-                  placeholder="Enter drop location..."
-                  onFocus={() => setActiveInput('drop')}
-                  onChange={(e) => setDrop(e.target.value)}
-                  className="w-full bg-transparent border-none text-[15px] font-bold text-gray-900 focus:outline-none placeholder:text-gray-300"
-                />
-                {drop.length > 0 && (
-                  <button onClick={() => setDrop('')} className="ml-2 shrink-0">
-                    <X size={16} className="text-gray-300 hover:text-gray-600 transition-colors" />
-                  </button>
-                )}
-              </div>
+               {/* Dynamic Stops */}
+               <AnimatePresence>
+                  {stops.map((stop, idx) => (
+                     <motion.div
+                        key={`stop-${idx}`}
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="space-y-4 pt-1"
+                     >
+                        <div className="flex items-center gap-3">
+                           <div className="w-6 h-6 rounded-full border-2 border-blue-500 flex items-center justify-center shrink-0">
+                              <div className="w-2 h-2 rounded-full bg-blue-500" />
+                           </div>
+                           <div 
+                              className={`flex-1 flex items-center border rounded-[20px] px-4 py-3 transition-all ${activeInput === idx ? 'border-blue-500/30 bg-blue-50/10' : 'border-gray-50 bg-gray-50/30'}`}
+                              onClick={() => setActiveInput(idx)}
+                           >
+                              <input
+                                 type="text"
+                                 value={stop}
+                                 placeholder={`Stop ${idx + 1} point...`}
+                                 onChange={(e) => updateStop(idx, e.target.value)}
+                                 className="w-full bg-transparent border-none text-[15px] font-bold text-[#001b33] focus:outline-none placeholder:text-blue-300"
+                              />
+                           </div>
+                           <button onClick={() => removeStop(idx)} className="w-8 h-8 rounded-xl bg-red-50 text-red-400 flex items-center justify-center shrink-0"><Minus size={14} strokeWidth={3} /></button>
+                        </div>
+                     </motion.div>
+                  ))}
+               </AnimatePresence>
+
+               {/* Drop Row */}
+               <div className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-full border-2 border-orange-500 flex items-center justify-center shrink-0">
+                     <div className="w-2 h-2 rounded-full bg-orange-500" />
+                  </div>
+                  <div 
+                     className={`flex-1 flex items-center border rounded-[20px] px-4 py-3 transition-all ${activeInput === 'drop' ? 'border-orange-500/30 bg-orange-50/10' : 'border-gray-50 bg-gray-50/30'}`}
+                     onClick={() => setActiveInput('drop')}
+                  >
+                     <input
+                        type="text"
+                        value={drop}
+                        placeholder="Where to?"
+                        onChange={(e) => setDrop(e.target.value)}
+                        className="w-full bg-transparent border-none text-[15px] font-bold text-[#001b33] focus:outline-none placeholder:text-gray-300"
+                     />
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         {/* Action Pills (Compact) */}
+         <div className="grid grid-cols-2 gap-3 px-4 mt-6">
+            <button
+               onClick={showMapToast}
+               className="h-13 bg-white border border-gray-100 rounded-[22px] flex items-center justify-center gap-2 active:scale-95 transition-all text-[12px] font-bold text-[#001b33] uppercase tracking-wider"
+            >
+               <MapPin size={16} className="text-gray-400" />
+               <span>On Map</span>
+            </button>
+            <button
+               onClick={addStop}
+               className="h-13 bg-blue-50 border border-blue-100 rounded-[22px] flex items-center justify-center gap-2 active:scale-95 transition-all text-[12px] font-bold text-blue-600 uppercase tracking-wider"
+            >
+               <div className="w-4 h-4 rounded bg-blue-500 flex items-center justify-center text-white"><Plus size={10} strokeWidth={4} /></div>
+               <span>Add Stop</span>
+            </button>
+         </div>
+
+         {/* Search Results (Standardized) */}
+         <div className="px-4 mt-8">
+            <div className="flex items-center justify-between mb-5 px-1">
+               <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-[2.5px]">{query.trim().length > 0 ? 'Live Discovery' : 'Trusted Hubs'}</h3>
+                {query.trim().length > 0 && <span className="text-[9px] font-bold text-accent uppercase tracking-widest">{searchResults.length} Hits</span>}
             </div>
 
-          </div>
-        </div>
-      </div>
-
-      {/* Action Pills */}
-      <div className="flex gap-3 px-5 my-4">
-        <button
-          onClick={showMapToast}
-          className="flex-1 flex items-center justify-center gap-2 bg-white border border-gray-100 rounded-full py-2.5 shadow-sm active:scale-95 transition-all text-sm font-black text-gray-800"
-        >
-          <MapPin size={16} className="text-gray-900" />
-          <span>Select on map</span>
-        </button>
-        <button
-          onClick={addStop}
-          className="flex-1 flex items-center justify-center gap-2 rounded-full py-2.5 shadow-sm active:scale-95 transition-all text-sm font-black border bg-blue-50 border-blue-200 text-blue-600"
-        >
-          <div className="w-4 h-4 rounded bg-blue-500 flex items-center justify-center">
-            <Plus size={12} className="text-white" strokeWidth={3} />
-          </div>
-          <span>Add stop {stops.length > 0 ? `(${stops.length})` : ''}</span>
-        </button>
-      </div>
-
-      {/* Stop count chips */}
-      {stops.length > 0 && (
-        <div className="px-5 mb-2">
-          <div className="flex gap-2 flex-wrap">
-            {stops.map((s, idx) => (
-              <div key={idx} className="flex items-center gap-1.5 bg-blue-50 border border-blue-100 rounded-full px-3 py-1">
-                <div className="w-2 h-2 rounded-full bg-blue-400" />
-                <span className="text-[11px] font-black text-blue-700 truncate max-w-[100px]">
-                  {s.trim() || `Stop ${idx + 1}`}
-                </span>
-                <button onClick={() => removeStop(idx)}>
-                  <X size={11} className="text-blue-400 hover:text-blue-700" strokeWidth={3} />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Search Results */}
-      <div className="px-5 mb-4">
-        <h2 className="text-[17px] font-extrabold text-gray-900 mb-2 ml-1">
-          {query.trim().length > 0 ? 'Search Results' : 'Popular Locations'}
-        </h2>
-
-        {searchResults.length > 0 ? (
-          <div className="space-y-1">
-            {searchResults.map((result, idx) => (
-              <motion.div
-                key={idx}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => handleSelectResult(result.title)}
-                className="flex gap-4 py-2 group cursor-pointer"
-              >
-                <div className="mt-1 opacity-40 group-hover:opacity-100 shrink-0 transition-opacity">
-                  <MapPin size={20} className="text-gray-400" />
-                </div>
-                <div className="flex-1 pb-3 border-b border-gray-50">
-                  <h4 className="text-[16px] font-black text-gray-900 leading-tight">{result.title}</h4>
-                  <p className="text-[13px] text-gray-400 font-bold mt-0.5 line-clamp-1">{result.address}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12">
-            <div className="text-4xl mb-3">🔍</div>
-            <p className="text-[15px] font-black text-gray-400">No results for <span className="text-gray-700">"{query}"</span></p>
-            <p className="text-[12px] font-bold text-gray-300 mt-1">Try a different search term</p>
-          </div>
-        )}
+            <div className="space-y-1">
+               {searchResults.length > 0 ? (
+                  searchResults.map((result, idx) => (
+                     <motion.div
+                        key={idx}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => handleSelectResult(result.title)}
+                        className="flex items-center gap-4 p-3.5 hover:bg-white rounded-[24px] cursor-pointer group transition-all"
+                     >
+                        <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-all text-gray-300">
+                           <MapPin size={20} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                           <h4 className="text-[15px] font-bold text-[#001b33] leading-none tracking-tight mb-1">{result.title}</h4>
+                           <p className="text-[11px] font-bold text-gray-300 uppercase tracking-widest truncate">{result.address}</p>
+                        </div>
+                     </motion.div>
+                  ))
+               ) : (
+                  <div className="text-center py-10">
+                     <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <MapPin size={28} className="text-gray-200" />
+                     </div>
+                     <p className="text-[13px] font-bold text-gray-400 uppercase tracking-widest">No routes found for "{query}"</p>
+                  </div>
+               )}
+            </div>
+         </div>
       </div>
     </div>
   );

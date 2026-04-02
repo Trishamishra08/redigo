@@ -6,14 +6,14 @@ const ServiceItem = ({ icon, label, path }) => {
   const navigate = useNavigate();
   return (
     <motion.div 
-      whileTap={{ scale: 0.9 }}
+      whileTap={{ scale: 0.95 }}
       onClick={() => path && navigate(path)}
-      className="flex flex-col items-center gap-2 cursor-pointer group"
+      className="flex flex-col items-center gap-3 cursor-pointer group"
     >
-      <div className="w-[70px] h-[70px] md:w-[80px] md:h-[80px] bg-white rounded-[24px] shadow-[0_8px_25px_rgba(0,0,0,0.03)] border border-gray-50 flex items-center justify-center p-3 group-hover:shadow-md transition-all">
-        <img src={icon} alt={label} className="w-full h-full object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-300" />
+      <div className="w-[80px] h-[80px] md:w-[90px] md:h-[90px] bg-white rounded-[32px] shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-gray-100 flex items-center justify-center p-4 transition-all duration-300 group-hover:shadow-xl group-hover:border-primary/10 group-hover:-translate-y-1">
+        <img src={icon} alt={label} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
       </div>
-      <span className="text-[12px] font-black text-gray-800 tracking-tight">{label}</span>
+      <span className="text-[13px] font-bold text-[#001b33] tracking-tight transition-colors group-hover:text-accent">{label}</span>
     </motion.div>
   );
 };
@@ -27,9 +27,9 @@ const ServiceGrid = () => {
   ];
 
   return (
-    <div className="px-5 mb-4">
-      <h2 className="text-[19px] font-black text-gray-900 mb-2 ml-1 tracking-tight">Services</h2>
-      <div className="flex justify-between items-center gap-2">
+    <div className="px-5 mb-8 mt-10">
+      <h2 className="text-[20px] font-bold text-[#001b33] mb-5 ml-1 tracking-tight">Explore our Services</h2>
+      <div className="flex justify-between items-center gap-3">
         {services.map((service, index) => (
           <ServiceItem key={index} {...service} />
         ))}

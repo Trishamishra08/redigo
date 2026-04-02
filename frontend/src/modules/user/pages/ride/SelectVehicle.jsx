@@ -8,34 +8,34 @@ const VehicleItem = ({ icon, name, capacity, badge, sublabel, eta, dropTime, pri
     whileTap={{ scale: 0.98 }}
     onClick={onClick}
     className={`p-4 border-b border-gray-50 flex items-center gap-4 cursor-pointer relative transition-all ${
-      isSelected ? 'bg-blue-50/10 border-2 border-[#1E88E5] rounded-[24px] shadow-sm my-2 mx-1' : 'bg-white'
+      isSelected ? 'bg-accent/5 border-l-4 border-accent shadow-2xl z-10' : 'bg-white'
     }`}
   >
-    <div className="w-[70px] h-[70px] shrink-0 p-1 flex items-center justify-center bg-gray-50/50 rounded-2xl">
-      <img src={icon} alt={name} className="w-full h-full object-contain drop-shadow-sm" />
+    <div className={`w-[74px] h-[74px] shrink-0 p-1.5 flex items-center justify-center rounded-2xl transition-all ${isSelected ? 'bg-accent/10 border border-accent/20' : 'bg-gray-50/50'}`}>
+      <img src={icon} alt={name} className="w-full h-full object-contain drop-shadow-md" />
     </div>
     <div className="flex-1 min-w-0">
-      <div className="flex items-center gap-1.5 flex-wrap">
-        <h4 className="text-[17px] font-black text-gray-900 leading-tight">{name}</h4>
-        <div className="flex items-center gap-0.5 text-gray-400">
-          <User size={13} strokeWidth={3} />
-          <span className="text-[12px] font-black">{capacity}</span>
+      <div className="flex items-center gap-2 flex-wrap">
+        <h4 className="text-[17px] font-bold text-[#001b33] leading-tight tracking-tight">{name}</h4>
+        <div className="flex items-center gap-1 text-gray-300">
+          <User size={12} strokeWidth={3} />
+          <span className="text-[11px] font-bold">{capacity}</span>
         </div>
         {badge && (
-          <span className="bg-[#E0F2F1] text-[#00796B] text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-widest leading-none">
+          <span className="bg-[#E0F2F1] text-[#00796B] text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-widest leading-none">
             {badge}
           </span>
         )}
       </div>
       <div className="mt-1">
-        <p className="text-[13px] font-bold text-gray-800 leading-tight">{sublabel}</p>
-        <p className="text-[11px] font-bold text-gray-400 mt-0.5">
+        <p className="text-[12px] font-bold text-gray-500 leading-tight tracking-tight uppercase opacity-70">{sublabel}</p>
+        <p className="text-[10px] font-bold text-gray-300 mt-1 uppercase tracking-widest">
            • {eta} mins away • Drop {dropTime} pm
         </p>
       </div>
     </div>
     <div className="text-right shrink-0">
-      <span className="text-[18px] font-black text-gray-900 leading-tight tracking-tighter">₹{price}</span>
+      <span className="text-[20px] font-black text-[#001b33] leading-tight tracking-tight">₹{price}</span>
     </div>
   </motion.div>
 );
@@ -60,32 +60,33 @@ const SelectVehicle = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 max-w-lg mx-auto relative font-sans overflow-hidden">
-      {/* Map Header */}
+    <div className="min-h-screen bg-bg-light max-w-lg mx-auto relative font-sans overflow-hidden">
+      {/* Map Header (Enhanced) */}
       <div className="h-[43%] w-full relative bg-gray-200">
-        <img src="/map image.avif" className="w-full h-full object-cover" alt="Map View" />
+        <img src="/map image.avif" className="w-full h-full object-cover grayscale-[0.2]" alt="Map View" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#001b33]/20 via-transparent to-transparent"></div>
         
-        <div className="absolute top-6 left-5 right-5 z-20 flex items-center gap-3">
+        <div className="absolute top-8 left-5 right-5 z-20 flex items-center gap-3">
             <button 
                 onClick={() => navigate(-1)}
-                className="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center shrink-0 active:scale-95 transition-all"
+                className="w-11 h-11 bg-[#001b33] rounded-[18px] shadow-2xl flex items-center justify-center shrink-0 active:scale-95 transition-all text-white border border-white/10"
             >
-                <ArrowLeft size={20} className="text-gray-900" strokeWidth={3} />
+                <ArrowLeft size={18} strokeWidth={3} />
             </button>
-            <div className="flex-1 bg-white rounded-full px-5 py-3 shadow-[0_4px_25px_rgba(0,0,0,0.1)] flex items-center gap-3 active:scale-[0.98] transition-all cursor-pointer">
-                <span className="text-[15px] font-black text-gray-800 truncate flex-1 tracking-tight">world Cup S...</span>
-                <X size={18} className="text-gray-400 hover:text-gray-900 transition-colors" />
+            <div className="flex-1 bg-white/95 backdrop-blur-md rounded-[18px] px-5 py-3.5 shadow-2xl flex items-center justify-between active:scale-[0.98] transition-all cursor-pointer border border-white">
+                <span className="text-[14px] font-bold text-[#001b33] truncate flex-1 tracking-tight pr-4 uppercase">Destination: {drop.split(',')[0]}</span>
+                <X size={16} className="text-gray-300 hover:text-[#001b33] transition-colors" />
             </div>
         </div>
 
         {/* PROMO BANNER — dismissable */}
         {showPromo && (
-          <div className="absolute bottom-6 left-5 right-5 bg-white/90 backdrop-blur-md border border-white rounded-[24px] overflow-hidden flex items-center pr-3 z-30 shadow-[0_12px_45px_rgba(0,0,0,0.08)]">
+          <div className="absolute bottom-10 left-5 right-5 bg-white/90 backdrop-blur-md border border-white rounded-[24px] overflow-hidden flex items-center pr-3 z-30 shadow-[0_12px_45px_rgba(0,0,0,0.08)]">
              <div className="p-4 py-3 flex-1">
                 <h5 className="text-[13px] font-black leading-tight text-blue-950">Going a few kms away? <br/>Cab is meters away.</h5>
                 <p className="text-[9px] font-extrabold text-blue-700 mt-1 uppercase tracking-wider">Use code GOFREE on 1st Cab ride.</p>
              </div>
-             <div className="w-[85px] h-[65px] relative">
+             <div className="w-[85px] h-[65px] relative shrink-0">
                 <img src="/ride_now_banner.png" className="w-full h-full object-cover rounded-xl" alt="Promo Car" />
              </div>
              <div className="ml-3 pl-1 border-l border-gray-100 h-6 flex items-center">
@@ -97,33 +98,41 @@ const SelectVehicle = () => {
         )}
       </div>
 
-      {/* Vehicle Selection Sheet */}
-      <div className="absolute bottom-0 left-0 right-0 top-[40%] bg-white rounded-t-[40px] shadow-[0_-20px_60px_rgba(0,0,0,0.05)] flex flex-col z-40 overflow-hidden">
-         <div className="flex-1 overflow-y-auto no-scrollbar pt-6 px-3 pb-36">
-            {vehicles.map((v) => (
-              <VehicleItem 
-                key={v.id} 
-                {...v} 
-                isSelected={selected === v.id}
-                onClick={() => setSelected(v.id)}
-              />
-            ))}
+      {/* Vehicle Selection Sheet (Branded) */}
+      <div className="absolute bottom-0 left-0 right-0 top-[40%] bg-white rounded-t-[44px] shadow-[0_-20px_80px_rgba(0,0,0,0.15)] flex flex-col z-40 overflow-hidden border-t border-gray-100">
+         <div className="flex-1 overflow-y-auto no-scrollbar pt-8 px-2 pb-36">
+            <h4 className="text-[10px] font-bold text-gray-400 mb-4 px-6 uppercase tracking-[3px] opacity-70">SELECT SERVICE</h4>
+            <div className="space-y-1">
+               {vehicles.map((v) => (
+                 <VehicleItem 
+                   key={v.id} 
+                   {...v} 
+                   isSelected={selected === v.id}
+                   onClick={() => setSelected(v.id)}
+                 />
+               ))}
+            </div>
          </div>
 
-         {/* Bottom Control Bar */}
-         <div className="absolute bottom-0 left-0 right-0 bg-white p-5 border-t border-gray-50 flex flex-col gap-4 shadow-2xl">
+         {/* Bottom Action Section (Premium) */}
+         <div className="absolute bottom-0 left-0 right-0 bg-white p-6 pb-10 border-t border-gray-50 flex flex-col gap-5 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]">
             <div 
-                className="flex items-center justify-between px-4 pb-1 group cursor-pointer active:opacity-60 transition-all"
+                className="flex items-center justify-between px-4 group cursor-pointer active:opacity-60 transition-all"
                 onClick={() => setShowPaymentModal(true)}
             >
                <div className="flex items-center gap-4">
-                  <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
-                     {paymentMethod === 'Cash' ? <Banknote size={20} strokeWidth={3} /> : <CreditCard size={20} strokeWidth={3} />}
+                  <div className="w-10 h-10 rounded-2xl bg-gray-50/80 flex items-center justify-center text-[#001b33] shadow-inner">
+                     {paymentMethod === 'Cash' ? <Banknote size={20} strokeWidth={2.5} /> : <CreditCard size={20} strokeWidth={2.5} />}
                   </div>
-                  <span className="text-[15px] font-black text-gray-950 tracking-tight">{paymentMethod}</span>
-                  <ChevronDown size={18} className="text-gray-400 group-hover:text-primary transition-colors" />
+                  <div>
+                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">MODE</p>
+                     <p className="text-[14px] font-bold text-[#001b33] tracking-tight">{paymentMethod}</p>
+                  </div>
+                  <ChevronDown size={16} className="text-gray-300 group-hover:text-accent transition-colors ml-1" strokeWidth={3} />
                </div>
-               <ChevronRight size={20} className="text-gray-300" />
+               <div className="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center text-gray-300">
+                  <ChevronRight size={16} strokeWidth={3} />
+               </div>
             </div>
 
             <motion.button
@@ -141,14 +150,14 @@ const SelectVehicle = () => {
                   },
                 });
               }}
-              className="w-full bg-[#f8e001] py-5 rounded-[24px] text-[18px] font-black text-[#1C2833] shadow-lg shadow-yellow-500/10 transition-all uppercase tracking-tight active:bg-yellow-400"
+              className="w-full bg-[#001b33] py-5 rounded-[24px] text-[18px] font-black text-white shadow-2xl transition-all uppercase tracking-tight active:scale-95"
             >
               Book {selected === 'bike' ? 'Bike' : selected === 'auto' ? 'Auto' : 'Cab'}
             </motion.button>
          </div>
       </div>
 
-      {/* PAYMENT SELECTION MODAL */}
+      {/* PAYMENT SELECTION MODAL — THEMED */}
       <AnimatePresence>
         {showPaymentModal && (
           <>
@@ -157,51 +166,51 @@ const SelectVehicle = () => {
                animate={{ opacity: 1 }}
                exit={{ opacity: 0 }}
                onClick={() => setShowPaymentModal(false)}
-               className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] max-w-lg mx-auto"
+               className="fixed inset-0 bg-[#001b33]/60 backdrop-blur-md z-[100] max-w-lg mx-auto"
             />
             <motion.div 
                initial={{ y: "100%" }}
                animate={{ y: 0 }}
                exit={{ y: "100%" }}
-               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-               className="fixed bottom-0 left-0 right-0 max-w-lg mx-auto bg-white rounded-t-[40px] p-6 z-[101] shadow-2xl pb-10"
+               transition={{ type: "spring", damping: 30, stiffness: 350 }}
+               className="fixed bottom-0 left-0 right-0 max-w-lg mx-auto bg-white rounded-t-[44px] p-8 z-[101] shadow-2xl pb-14 border-t border-gray-100"
             >
                <div className="w-12 h-1.5 bg-gray-100 rounded-full mx-auto mb-6"></div>
-               <h3 className="text-xl font-black text-gray-900 mb-6 text-center">Select Payment Method</h3>
+               <h3 className="text-xl font-black text-[#001b33] mb-6 text-center">Select Payment Method</h3>
                
                <div className="space-y-3">
                   <div 
-                    className={`flex items-center gap-4 p-5 rounded-2xl border-2 transition-all cursor-pointer ${paymentMethod === 'Cash' ? 'border-[#E85D04] bg-orange-50/50' : 'border-gray-50 bg-gray-50/30'}`}
+                    className={`flex items-center gap-4 p-5 rounded-2xl border-2 transition-all cursor-pointer ${paymentMethod === 'Cash' ? 'border-accent bg-accent/5' : 'border-gray-50 bg-gray-50/30'}`}
                     onClick={() => { setPaymentMethod('Cash'); setShowPaymentModal(false); }}
                   >
-                    <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center text-green-600">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
                         <Banknote size={24} strokeWidth={2.5} />
                     </div>
                     <div className="flex-1">
-                        <p className="font-black text-gray-900 text-lg">Cash</p>
+                        <p className="font-black text-[#001b33] text-lg">Cash</p>
                         <p className="text-xs font-bold text-gray-400">Pay after ride</p>
                     </div>
-                    {paymentMethod === 'Cash' && <div className="w-6 h-6 rounded-full bg-[#E85D04] flex items-center justify-center text-white"><X size={14} className="rotate-45" strokeWidth={3} /></div>}
+                    {paymentMethod === 'Cash' && <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-white shadow-lg"><CheckCircle2 size={14} strokeWidth={3} /></div>}
                   </div>
 
                   <div 
-                    className={`flex items-center gap-4 p-5 rounded-2xl border-2 transition-all cursor-pointer ${paymentMethod === 'Online Payment' ? 'border-[#E85D04] bg-orange-50/50' : 'border-gray-50 bg-gray-50/30'}`}
+                    className={`flex items-center gap-4 p-5 rounded-2xl border-2 transition-all cursor-pointer ${paymentMethod === 'Online Payment' ? 'border-accent bg-accent/5' : 'border-gray-50 bg-gray-50/30'}`}
                     onClick={() => { setPaymentMethod('Online Payment'); setShowPaymentModal(false); }}
                   >
-                    <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
+                    <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
                         <CreditCard size={24} strokeWidth={2.5} />
                     </div>
                     <div className="flex-1">
-                        <p className="font-black text-gray-900 text-lg">Online Payment</p>
+                        <p className="font-black text-[#001b33] text-lg">Online Payment</p>
                         <p className="text-xs font-bold text-gray-400">UPI, Cards or Wallets</p>
                     </div>
-                    {paymentMethod === 'Online Payment' && <div className="w-6 h-6 rounded-full bg-[#E85D04] flex items-center justify-center text-white"><X size={14} className="rotate-45" strokeWidth={3} /></div>}
+                    {paymentMethod === 'Online Payment' && <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-white shadow-lg"><CheckCircle2 size={14} strokeWidth={3} /></div>}
                   </div>
                </div>
 
                <button 
                 onClick={() => setShowPaymentModal(false)}
-                className="w-full mt-8 py-4 text-sm font-black text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest"
+                className="w-full mt-8 py-4 text-sm font-black text-gray-400 hover:text-[#001b33] transition-colors uppercase tracking-widest"
                >
                 Close
                </button>

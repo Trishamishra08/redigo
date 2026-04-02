@@ -5,14 +5,14 @@ import { Home, Grid, Map, User } from 'lucide-react';
 const NavItem = ({ icon: Icon, label, path, isActive, onClick }) => (
   <button 
     onClick={() => onClick(path)}
-    className={`flex flex-col items-center gap-1 flex-1 py-1 transition-all ${
-      isActive ? 'text-gray-900 scale-110' : 'text-gray-400 opacity-60'
+    className={`flex flex-col items-center gap-1.5 flex-1 py-1 px-1 transition-all duration-300 ${
+      isActive ? 'text-accent' : 'text-gray-300 hover:text-gray-500'
     }`}
   >
-    <div className={`p-1 rounded-xl transition-colors ${isActive ? 'bg-gray-100' : 'bg-transparent'}`}>
-      <Icon size={20} strokeWidth={isActive ? 3 : 2} />
+    <div className={`p-2 rounded-2xl transition-all duration-500 ${isActive ? 'bg-accent/10 shadow-inner scale-110' : 'bg-transparent'}`}>
+      <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
     </div>
-    <span className={`text-[10px] uppercase tracking-widest font-black ${isActive ? 'opacity-100' : 'opacity-70'}`}>
+    <span className={`text-[9px] uppercase tracking-widest font-black ${isActive ? 'opacity-100' : 'opacity-40'}`}>
       {label}
     </span>
   </button>

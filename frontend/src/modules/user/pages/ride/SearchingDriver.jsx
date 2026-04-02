@@ -76,14 +76,14 @@ const SearchingDriver = () => {
   const isAccepted  = stage === STAGES.ACCEPTED || stage === STAGES.COMPLETING;
 
   return (
-    <div className="min-h-screen bg-gray-100 max-w-lg mx-auto relative font-sans overflow-hidden">
+    <div className="min-h-screen bg-bg-light max-w-lg mx-auto relative font-sans overflow-hidden">
 
       {/* Blurred Map Background */}
       <div className="absolute inset-0 z-0 scale-110">
-        <img src="/map image.avif" className="w-full h-full object-cover blur-[2px] opacity-70" alt="Map View" />
+        <img src="/map image.avif" className="w-full h-full object-cover blur-[2px] opacity-70 grayscale-[0.2]" alt="Map View" />
       </div>
 
-      {/* ── SEARCHING ANIMATION (visible only while searching) ── */}
+      {/* ── SEARCHING ANIMATION ── */}
       <AnimatePresence>
         {isSearching && (
           <motion.div
@@ -97,16 +97,16 @@ const SearchingDriver = () => {
               <motion.div
                 animate={{ scale: [1, 1.5, 1], opacity: [0.6, 0, 0.6] }}
                 transition={{ repeat: Infinity, duration: 2 }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#E85D04]/20 rounded-full"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-accent/20 rounded-[64px]"
               />
               <motion.div
                 animate={{ scale: [1, 2, 1], opacity: [0.4, 0, 0.4] }}
                 transition={{ repeat: Infinity, duration: 2.5, delay: 0.5 }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#E85D04]/10 rounded-full"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/10 rounded-[64px]"
               />
-              <div className="relative w-20 h-20 bg-white rounded-full shadow-2xl flex items-center justify-center p-4 border-4 border-[#E85D04]/10">
+              <div className="relative w-24 h-24 bg-white rounded-[32px] shadow-2xl flex items-center justify-center p-4 border-4 border-accent/10">
                 <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 8, ease: 'linear' }}>
-                  <Search size={32} className="text-[#E85D04]" strokeWidth={3} />
+                  <Search size={36} className="text-accent" strokeWidth={3} />
                 </motion.div>
               </div>
             </div>
@@ -114,30 +114,25 @@ const SearchingDriver = () => {
         )}
       </AnimatePresence>
 
-      {/* Close / Cancel button (only while searching) */}
+      {/* Close button (only while searching) */}
       {isSearching && (
         <div className="absolute top-8 right-6 z-20">
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => setShowCancelConfirm(true)}
-            className="w-11 h-11 bg-white rounded-full shadow-xl flex items-center justify-center border border-gray-100"
+            className="w-11 h-11 bg-[#001b33] rounded-2xl shadow-xl flex items-center justify-center border border-white/10 active:scale-95 transition-all text-white"
           >
-            <X size={20} className="text-gray-900" strokeWidth={3} />
+            <X size={20} strokeWidth={3} />
           </motion.button>
         </div>
       )}
 
       {/* Route Summary Pill */}
-      <div className={`absolute top-8 z-20 bg-white/90 backdrop-blur-md rounded-2xl px-4 py-2.5 shadow-lg border border-white max-w-[65%] ${isSearching ? 'left-6' : 'left-6 right-6 max-w-none'}`}>
-        <p className="text-[11px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">Route</p>
-        <p className="text-[13px] font-black text-gray-900 leading-tight line-clamp-1">
+      <div className={`absolute top-8 z-20 bg-white/95 backdrop-blur-md rounded-[20px] px-5 py-3 shadow-2xl border border-gray-100 max-w-[70%] ${isSearching ? 'left-6' : 'left-6 right-6 max-w-none'}`}>
+        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-[2px] leading-none mb-1.5 opacity-60">Route</p>
+        <p className="text-[14px] font-bold text-[#001b33] leading-tight line-clamp-1 capitalize">
           {routeState.pickup || 'Pickup'} → {routeState.drop || 'Drop'}
         </p>
-        {routeState.stops?.length > 0 && (
-          <p className="text-[11px] font-bold text-blue-500 mt-0.5 line-clamp-1">
-            Via {routeState.stops.join(' · ')}
-          </p>
-        )}
       </div>
 
       {/* ── BOTTOM CARD ── */}
@@ -151,138 +146,113 @@ const SearchingDriver = () => {
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 30, opacity: 0 }}
-              className="bg-white rounded-[32px] p-6 shadow-2xl space-y-5 border border-gray-50"
+              className="bg-white rounded-[40px] p-8 shadow-2xl space-y-6 border border-gray-100"
             >
-              <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-[22px] font-black text-gray-900 tracking-tight">Finding your captain...</h1>
-                <p className="text-[14px] font-bold text-gray-400 capitalize">Connecting with drivers nearby</p>
+              <div className="flex flex-col items-center gap-3 text-center">
+                <h1 className="text-[22px] font-bold text-[#001b33] tracking-tight leading-none uppercase">Finding your captain...</h1>
+                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest leading-none mt-1">Connecting with drivers nearby</p>
               </div>
 
-              <div className="flex justify-center">
-                <div className="flex gap-2">
+              <div className="flex justify-center py-2">
+                <div className="flex gap-2.5">
                   {[1, 2, 3, 4].map((dot) => (
                     <motion.div
                       key={dot}
-                      animate={{ opacity: [0.3, 1, 0.3] }}
+                      animate={{ scale: [1, 1.5, 1], opacity: [0.3, 1, 0.3] }}
                       transition={{ repeat: Infinity, duration: 1.2, delay: dot * 0.2 }}
-                      className="w-2.5 h-2.5 bg-[#E85D04] rounded-full"
+                      className="w-2.5 h-2.5 bg-accent rounded-full shadow-sm shadow-accent/20"
                     />
                   ))}
                 </div>
               </div>
 
-              <div className="flex items-center justify-center gap-4 py-2 border-y border-gray-50">
+              <div className="flex items-center justify-center gap-5 py-5 border-y border-gray-50">
                 <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-sm shadow-green-200" />
-                  <span className="text-[12px] font-black text-gray-800 uppercase tracking-widest leading-none">High Chance</span>
+                  <div className="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse shadow-lg shadow-emerald-200" />
+                  <span className="text-[11px] font-bold text-[#001b33] uppercase tracking-widest leading-none">High Chance</span>
                 </div>
                 <div className="w-[1.5px] h-4 bg-gray-100" />
                 <div className="flex items-center gap-2">
-                  <ShieldCheck size={14} className="text-blue-500" />
-                  <span className="text-[12px] font-black text-gray-800 uppercase tracking-widest leading-none">Safety Verified</span>
+                  <ShieldCheck size={16} className="text-accent" />
+                  <span className="text-[11px] font-bold text-[#001b33] uppercase tracking-widest leading-none">Safety Verified</span>
                 </div>
               </div>
 
               <button
                 onClick={() => setShowCancelConfirm(true)}
-                className="w-full py-4 text-[14px] font-black text-gray-400 hover:text-red-500 transition-colors uppercase tracking-widest"
+                className="w-full h-18 text-[12px] font-bold text-gray-400 hover:text-red-500 transition-all uppercase tracking-[2px]"
               >
                 Cancel My Search
               </button>
             </motion.div>
           )}
 
-          {/* ---- CAPTAIN ASSIGNED CARD (cancel visible, OTP hidden) ---- */}
+          {/* ---- CAPTAIN ASSIGNED CARD ---- */}
           {isAssigned && (
             <motion.div
               key="assigned-card"
               initial={{ y: 60, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 30, opacity: 0 }}
-              className="bg-white rounded-[32px] shadow-2xl border border-gray-50 overflow-hidden"
+              className="bg-white rounded-[40px] shadow-2xl border border-gray-100 overflow-hidden"
             >
-              {/* Green banner */}
-              <div className="bg-gradient-to-r from-green-500 to-emerald-600 px-5 py-3 flex items-center gap-3">
-                <CheckCircle2 size={20} className="text-white" strokeWidth={3} />
+              <div className="bg-[#001b33] px-6 py-4 flex items-center gap-3">
+                <CheckCircle2 size={22} className="text-accent" strokeWidth={3} />
                 <div>
-                  <p className="text-white font-black text-[14px] leading-tight">Captain Found!</p>
-                  <p className="text-green-100 text-[11px] font-bold">Waiting for captain to accept your ride</p>
+                  <p className="text-white font-bold text-[15px] leading-tight uppercase tracking-tight">Captain Found!</p>
+                  <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest mt-0.5">Waiting for captain to accept your ride</p>
                 </div>
                 <div className="ml-auto flex gap-1.5">
                   {[1,2,3].map(d => (
-                    <motion.div key={d} animate={{ opacity:[0.3,1,0.3] }} transition={{ repeat:Infinity, duration:1.2, delay: d*0.25 }}
-                      className="w-2 h-2 rounded-full bg-white/70"
+                    <motion.div key={d} animate={{ scale:[0.5,1,0.5], opacity:[0.3,1,0.3] }} transition={{ repeat:Infinity, duration:1.2, delay: d*0.25 }}
+                      className="w-1.5 h-1.5 rounded-full bg-accent"
                     />
                   ))}
                 </div>
               </div>
 
-              <div className="p-5 space-y-4">
-                {/* Driver Info */}
-                <div className="flex items-center gap-4">
+              <div className="p-6 space-y-6">
+                <div className="flex items-center gap-5">
                   <div className="relative shrink-0">
-                    <div className="w-[68px] h-[68px] rounded-[24px] bg-white overflow-hidden border border-gray-100 p-1 shadow-md">
+                    <div className="w-[74px] h-[74px] rounded-[28px] bg-white overflow-hidden border border-gray-100 p-1.5 shadow-xl">
                       <img
-                        src={`https://ui-avatars.com/api/?name=${driver.name.replace(' ', '+')}&background=f0f0f0&color=000`}
-                        className="w-full h-full rounded-[18px] object-cover"
+                        src={`https://ui-avatars.com/api/?name=${driver.name.replace(' ', '+')}&background=001b33&color=fff`}
+                        className="w-full h-full rounded-[20px] object-cover"
                         alt="Driver"
                       />
                     </div>
-                    <div className="absolute -bottom-1.5 -right-1.5 bg-yellow-400 px-1.5 py-1 rounded-xl border-2 border-white flex items-center gap-1 shadow-lg">
-                      <Star size={10} className="text-black fill-black" />
-                      <span className="text-[9px] font-black text-black leading-none">{driver.rating}</span>
+                    <div className="absolute -bottom-1 -right-1 bg-white px-2 py-1.5 rounded-xl border-2 border-gray-50 flex items-center gap-1 shadow-lg">
+                      <Star size={10} className="text-accent fill-accent" />
+                      <span className="text-[10px] font-bold text-[#001b33] leading-none">{driver.rating}</span>
                     </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-[19px] font-black text-gray-900 leading-tight">{driver.name}</h3>
-                    <p className="text-[13px] font-bold text-orange-500 mt-0.5 animate-pulse">Arriving in {driver.eta} mins</p>
-                    <div className="mt-1.5 flex items-center gap-2">
-                      <span className="text-[13px] font-black text-gray-700">{driver.plate}</span>
-                      <span className="text-[10px] font-bold text-gray-400 uppercase">· {driver.vehicle}</span>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-[20px] font-bold text-[#001b33] leading-tight truncate">{driver.name}</h3>
+                    <div className="flex items-center gap-2 mt-1">
+                       <span className="text-[11px] font-bold bg-accent/10 text-accent px-2 py-0.5 rounded-md uppercase tracking-wider">Arriving in {driver.eta} mins</span>
+                       <span className="text-[13px] font-bold text-gray-700">{driver.plate}</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Actions row */}
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => window.open(`tel:${driver.phone}`)}
-                    className="flex-1 flex items-center justify-center gap-2 bg-gray-50 rounded-2xl py-3 text-sm font-black text-gray-900 border border-gray-100 active:scale-95 transition-all"
-                  >
-                    <Phone size={18} />
-                    <span>Call</span>
+                <div className="grid grid-cols-3 gap-3">
+                  <button onClick={() => window.open(`tel:${driver.phone}`)} className="flex flex-col items-center justify-center gap-2 bg-gray-50/50 rounded-2xl py-4 transition-all active:scale-95 border border-gray-100">
+                    <Phone size={20} className="text-[#001b33]" />
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Call</span>
                   </button>
-                  <button
-                    onClick={() => navigate('/ride/chat', { state: { driver } })}
-                    className="flex-1 flex items-center justify-center gap-2 bg-gray-50 rounded-2xl py-3 text-sm font-black text-gray-900 border border-gray-100 active:scale-95 transition-all"
-                  >
-                    <MessageCircle size={18} />
-                    <span>Chat</span>
+                  <button onClick={() => navigate('/ride/chat', { state: { driver } })} className="flex flex-col items-center justify-center gap-2 bg-gray-50/50 rounded-2xl py-4 transition-all active:scale-95 border border-gray-100">
+                    <MessageCircle size={20} className="text-[#001b33]" />
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Chat</span>
                   </button>
-                  <button
-                    onClick={() => navigate('/support')}
-                    className="flex-1 flex items-center justify-center gap-2 bg-gray-50 rounded-2xl py-3 text-sm font-black text-gray-900 border border-gray-100 active:scale-95 transition-all"
-                  >
-                    <Shield size={18} />
-                    <span>Safety</span>
+                  <button onClick={() => navigate('/support')} className="flex flex-col items-center justify-center gap-2 bg-gray-50/50 rounded-2xl py-4 transition-all active:scale-95 border border-gray-100">
+                    <Shield size={20} className="text-[#001b33]" />
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Safety</span>
                   </button>
                 </div>
 
-                {/* OTP placeholder (hidden) */}
-                <div className="bg-gray-50 border border-dashed border-gray-200 rounded-2xl px-4 py-3 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-400 text-lg">🔒</span>
-                  </div>
-                  <div>
-                    <p className="text-[11px] font-black text-gray-400 uppercase tracking-widest">OTP</p>
-                    <p className="text-[13px] font-bold text-gray-400">Shown after captain accepts ride</p>
-                  </div>
-                </div>
-
-                {/* Cancel button (visible here) */}
                 <button
                   onClick={() => setShowCancelConfirm(true)}
-                  className="w-full py-3.5 text-[13px] font-black text-red-400 hover:text-red-600 transition-colors uppercase tracking-widest border border-red-50 rounded-2xl hover:bg-red-50"
+                  className="w-full py-4 text-[11px] font-bold text-gray-300 hover:text-red-400 transition-all uppercase tracking-[2px]"
                 >
                   Cancel Ride
                 </button>
@@ -290,104 +260,56 @@ const SearchingDriver = () => {
             </motion.div>
           )}
 
-          {/* ---- RIDE ACCEPTED CARD (OTP visible, cancel hidden) ---- */}
+          {/* ---- RIDE ACCEPTED CARD ---- */}
           {isAccepted && (
             <motion.div
               key="accepted-card"
               initial={{ y: 60, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 30, opacity: 0 }}
-              className="bg-white rounded-[32px] shadow-2xl border border-gray-50 overflow-hidden"
+              className="bg-white rounded-[40px] shadow-2xl border border-gray-100 overflow-hidden"
             >
-              {/* Orange "Ride Accepted" banner */}
-              <div className="bg-gradient-to-r from-[#E85D04] to-orange-500 px-5 py-3 flex items-center gap-3">
-                <Navigation size={18} className="text-white" strokeWidth={3} />
+              <div className="bg-[#001b33] px-6 py-4 flex items-center gap-3">
+                <Navigation size={20} className="text-accent" strokeWidth={3} />
                 <div>
-                  <p className="text-white font-black text-[14px] leading-tight">Ride Accepted!</p>
-                  <p className="text-orange-100 text-[11px] font-bold">Your captain is on the way</p>
+                  <p className="text-white font-bold text-[15px] leading-tight uppercase tracking-tight">Ride Accepted!</p>
+                  <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest mt-0.5">Your captain is on the way</p>
                 </div>
               </div>
 
-              <div className="p-5 space-y-4">
-                {/* Driver Info */}
-                <div className="flex items-center gap-4">
-                  <div className="relative shrink-0">
-                    <div className="w-[68px] h-[68px] rounded-[24px] bg-white overflow-hidden border border-gray-100 p-1 shadow-md">
-                      <img
-                        src={`https://ui-avatars.com/api/?name=${driver.name.replace(' ', '+')}&background=f0f0f0&color=000`}
-                        className="w-full h-full rounded-[18px] object-cover"
-                        alt="Driver"
-                      />
-                    </div>
-                    <div className="absolute -bottom-1.5 -right-1.5 bg-yellow-400 px-1.5 py-1 rounded-xl border-2 border-white flex items-center gap-1 shadow-lg">
-                      <Star size={10} className="text-black fill-black" />
-                      <span className="text-[9px] font-black text-black leading-none">{driver.rating}</span>
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-[19px] font-black text-gray-900 leading-tight">{driver.name}</h3>
-                    <p className="text-[13px] font-bold text-orange-500 mt-0.5 animate-pulse">Arriving in {driver.eta} mins</p>
-                    <div className="mt-1.5 flex items-center gap-2">
-                      <span className="text-[13px] font-black text-gray-700">{driver.plate}</span>
-                      <span className="text-[10px] font-bold text-gray-400 uppercase">· {driver.vehicle}</span>
-                    </div>
-                  </div>
+              <div className="p-6 space-y-6">
+                <div className="flex items-center gap-5 pb-6 border-b border-gray-50">
+                   <div className="w-[74px] h-[74px] rounded-[28px] bg-white overflow-hidden border border-gray-100 p-1.5 shadow-xl">
+                      <img src={`https://ui-avatars.com/api/?name=${driver.name.replace(' ', '+')}&background=001b33&color=fff`} className="w-full h-full rounded-[20px] object-cover" alt="Captain" />
+                   </div>
+                   <div className="flex-1">
+                      <h3 className="text-[20px] font-bold text-[#001b33] leading-tight">{driver.name}</h3>
+                      <p className="text-[13px] font-bold text-accent uppercase tracking-widest mt-1">Plate: {driver.plate}</p>
+                      <p className="text-[11px] font-bold text-gray-300 uppercase mt-0.5">{driver.vehicle}</p>
+                   </div>
                 </div>
 
-                {/* Actions row */}
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => window.open(`tel:${driver.phone}`)}
-                    className="flex-1 flex items-center justify-center gap-2 bg-gray-50 rounded-2xl py-3 text-sm font-black text-gray-900 border border-gray-100 active:scale-95 transition-all"
-                  >
-                    <Phone size={18} />
-                    <span>Call</span>
-                  </button>
-                  <button
-                    onClick={() => navigate('/ride/chat', { state: { driver } })}
-                    className="flex-1 flex items-center justify-center gap-2 bg-gray-50 rounded-2xl py-3 text-sm font-black text-gray-900 border border-gray-100 active:scale-95 transition-all"
-                  >
-                    <MessageCircle size={18} />
-                    <span>Chat</span>
-                  </button>
-                  <button
-                    onClick={() => navigate('/support')}
-                    className="flex-1 flex items-center justify-center gap-2 bg-gray-50 rounded-2xl py-3 text-sm font-black text-gray-900 border border-gray-100 active:scale-95 transition-all"
-                  >
-                    <Shield size={18} />
-                    <span>Safety</span>
-                  </button>
-                </div>
-
-                {/* OTP — now REVEALED */}
-                <motion.div
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-100 rounded-2xl px-5 py-4 flex items-center justify-between"
-                >
-                  <div>
-                    <p className="text-[10px] font-black text-orange-400 uppercase tracking-widest">Share OTP with Captain</p>
-                    <p className="text-[11px] font-bold text-gray-400 mt-0.5">To start your ride</p>
-                  </div>
-                  <div className="flex items-center gap-1">
+                <div className="bg-gray-50/50 rounded-[32px] p-6 text-center space-y-4 border border-gray-100">
+                  <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-[2px]">Share OTP with Captain</h4>
+                  <div className="flex justify-center gap-2">
                     {otp.split('').map((digit, i) => (
                       <motion.div
                         key={i}
-                        initial={{ y: -10, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: i * 0.08 }}
-                        className="w-10 h-12 bg-white rounded-xl border-2 border-orange-200 flex items-center justify-center shadow-sm"
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: i * 0.1 }}
+                        className="w-12 h-16 bg-white rounded-2xl border-2 border-accent/20 flex items-center justify-center shadow-xl text-[24px] font-bold text-[#001b33]"
                       >
-                        <span className="text-[22px] font-black text-gray-900 tracking-tight">{digit}</span>
+                        {digit}
                       </motion.div>
                     ))}
                   </div>
-                </motion.div>
+                  <p className="text-[11px] font-bold text-[#001b33]/40 uppercase tracking-widest mt-2">To start your ride</p>
+                </div>
 
-                {/* NO cancel button here */}
-                <div className="flex items-center justify-center gap-2 py-1">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                  <span className="text-[12px] font-black text-gray-400 uppercase tracking-widest">Ride in Progress</span>
+                <div className="flex items-center justify-center gap-3 pt-2">
+                   <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-lg" />
+                   <span className="text-[11px] font-bold text-gray-400 uppercase tracking-[2px]">Ride in Progress</span>
                 </div>
               </div>
             </motion.div>
@@ -396,7 +318,7 @@ const SearchingDriver = () => {
         </AnimatePresence>
       </div>
 
-      {/* Cancel Confirmation Modal */}
+      {/* Cancel Confirmation Modal (Enhanced) */}
       <AnimatePresence>
         {showCancelConfirm && (
           <>
@@ -405,35 +327,35 @@ const SearchingDriver = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowCancelConfirm(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] max-w-lg mx-auto"
+              className="fixed inset-0 bg-[#001b33]/60 backdrop-blur-md z-[100] max-w-lg mx-auto"
             />
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 50 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 50 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] max-w-sm bg-white rounded-[40px] p-8 z-[101] shadow-2xl text-center"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] max-w-sm bg-white rounded-[44px] p-10 z-[101] shadow-[0_40px_80px_rgba(0,0,0,0.15)] text-center"
             >
-              <div className="w-16 h-16 bg-red-50 rounded-3xl flex items-center justify-center text-red-500 mx-auto mb-5">
-                <AlertTriangle size={32} strokeWidth={2.5} />
+              <div className="w-20 h-20 bg-red-50 rounded-[28px] flex items-center justify-center text-red-500 mx-auto mb-6 shadow-inner">
+                <AlertTriangle size={36} strokeWidth={2.5} />
               </div>
-              <h3 className="text-xl font-black text-gray-900 mb-2">Cancel ride?</h3>
-              <p className="text-[14px] font-bold text-gray-400 mb-8 leading-relaxed">
+              <h3 className="text-[22px] font-bold text-[#001b33] mb-3 uppercase tracking-tight">Cancel ride?</h3>
+              <p className="text-[14px] font-bold text-gray-400 mb-10 leading-relaxed uppercase tracking-wide opacity-80">
                 {isAssigned
                   ? 'A captain has been assigned. Are you sure you want to cancel?'
                   : "We're still looking for a driver nearby. Are you sure you want to stop?"}
               </p>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <button
                   onClick={handleCancelSearch}
-                  className="w-full bg-[#1C2833] text-white py-4 rounded-full text-sm font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all"
+                  className="w-full h-18 bg-[#001b33] text-white rounded-[24px] text-[13px] font-bold uppercase tracking-[2px] shadow-2xl active:scale-95 transition-all"
                 >
                   Yes, Cancel
                 </button>
                 <button
                   onClick={() => setShowCancelConfirm(false)}
-                  className="w-full bg-white text-gray-400 py-4 rounded-full text-sm font-black uppercase tracking-widest hover:text-gray-900 active:scale-95 transition-all"
+                  className="w-full h-14 text-[12px] font-bold text-gray-300 uppercase tracking-widest active:scale-95 transition-all"
                 >
-                  {isSearching ? 'Keep Searching' : 'Go Back'}
+                  Keep Searching
                 </button>
               </div>
             </motion.div>

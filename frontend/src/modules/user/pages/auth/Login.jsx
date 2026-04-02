@@ -28,26 +28,25 @@ const Login = () => {
       title="Enter your mobile number" 
       subtitle="Fast. Affordable. Local rides."
     >
-      <form onSubmit={handleLogin} className="space-y-6">
+      <form onSubmit={handleLogin} className="space-y-8">
         <div className="space-y-4">
-          <label htmlFor="phone" className="text-sm font-black text-gray-800 tracking-tight ml-1">
+          <label htmlFor="phone" className="text-[12px] font-bold text-[#001b33] uppercase tracking-widest ml-1">
             Mobile Number
           </label>
-          <div className="flex items-center gap-3 bg-[#F6F7F9] rounded-2xl p-4 focus-within:ring-2 focus-within:ring-orange-200 focus-within:bg-white transition-all border border-transparent shadow-sm">
-            <div className="flex items-center gap-2 pr-3 border-r border-gray-200 opacity-70 group cursor-pointer">
-               <img src="https://flagcdn.com/w40/in.png" alt="India" className="w-5 h-3.5 object-cover rounded-sm" />
-               <span className="text-[15px] font-bold text-gray-800">+91</span>
-               <ChevronDown size={14} className="text-gray-400 group-hover:text-primary transition-colors" />
+          <div className="flex items-center gap-3 bg-gray-50/50 rounded-3xl p-5 border-2 border-gray-100 focus-within:border-accent/30 focus-within:bg-white transition-all shadow-sm">
+            <div className="flex items-center gap-2 pr-4 border-r border-gray-100 group cursor-pointer">
+               <img src="https://flagcdn.com/w40/in.png" alt="India" className="w-6 h-4 object-cover rounded-sm shadow-sm" />
+               <span className="text-[16px] font-bold text-[#001b33]">+91</span>
+               <ChevronDown size={14} className="text-gray-300 group-hover:text-accent transition-colors" />
             </div>
-            <div className="flex-1 flex items-center gap-3">
-               <Phone size={18} className="text-gray-400 opacity-50" />
+            <div className="flex-1 flex items-center gap-4">
                <input 
                   type="tel" 
                   id="phone"
                   autoFocus
                   maxLength={10}
-                  placeholder="Enter 10-digit number"
-                  className="w-full bg-transparent border-none text-[17px] font-black text-gray-900 placeholder:text-gray-300 focus:outline-none"
+                  placeholder="Enter contact number"
+                  className="w-full bg-transparent border-none text-[18px] font-bold text-[#001b33] placeholder:text-gray-300 focus:outline-none"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
                />
@@ -58,33 +57,33 @@ const Login = () => {
         <motion.button 
           whileTap={{ scale: 0.98 }}
           disabled={!isValidPhone || loading}
-          className={`w-full py-4 rounded-full text-lg font-black shadow-lg transition-all flex items-center justify-center gap-3 ${
+          className={`w-full h-18 rounded-[32px] text-lg font-bold shadow-2xl transition-all flex items-center justify-center gap-3 ${
             isValidPhone && !loading
-            ? 'bg-gradient-to-r from-[#E85D04] to-[#F48C06] text-white shadow-orange-200' 
-            : 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none'
+            ? 'bg-gradient-to-r from-[#003366] to-[#001b33] text-white shadow-[#001b33]/20' 
+            : 'bg-gray-100 text-gray-300 cursor-not-allowed shadow-none'
           }`}
         >
           {loading ? (
             <div className="flex items-center gap-3">
               <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-              <span>Sending OTP...</span>
+              <span>Authenticating...</span>
             </div>
           ) : (
             <span>Continue</span>
           )}
         </motion.button>
 
-        <p className="text-[12px] text-gray-400 font-bold text-center leading-relaxed px-2 mt-8">
+        <p className="text-[12px] text-gray-300 font-medium text-center leading-relaxed px-4 mt-10">
            By continuing, you agree to our 
-           <a href="#" className="underline text-[#F48C06] hover:text-[#E85D04] transition-colors ml-1">Terms</a> & 
-           <a href="#" className="underline text-[#F48C06] hover:text-[#E85D04] transition-colors ml-1">Privacy Policy</a>
+           <a href="#" className="font-bold text-accent hover:underline ml-1">Terms</a> & 
+           <a href="#" className="font-bold text-accent hover:underline ml-1">Privacy Policy</a>
         </p>
       </form>
 
       {/* Language Toggle */}
-      <div className="mt-12 pt-8 border-t border-gray-100 flex justify-center gap-6">
-        <button className="text-xs font-black text-primary border-b-2 border-primary pb-1">ENGLISH</button>
-        <button className="text-xs font-black text-gray-400 hover:text-gray-600 transition-colors">हिंदी</button>
+      <div className="mt-14 pt-10 border-t border-gray-50 flex justify-center gap-8">
+        <button className="text-[11px] font-bold text-[#001b33] border-b-2 border-accent pb-1 uppercase tracking-widest">EN - ENGLISH</button>
+        <button className="text-[11px] font-bold text-gray-300 hover:text-[#001b33] transition-colors uppercase tracking-widest">HI - हिंदी</button>
       </div>
     </AuthLayout>
   );

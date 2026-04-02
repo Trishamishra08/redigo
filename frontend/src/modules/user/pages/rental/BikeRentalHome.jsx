@@ -69,119 +69,119 @@ const BikeRentalHome = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#F8F9FB] max-w-lg mx-auto font-sans pb-10">
-      {/* Header */}
-      <div className="bg-white px-5 pt-10 pb-6 sticky top-0 z-20 shadow-sm border-b border-gray-50">
-        <div className="flex items-center gap-4 mb-5">
-          <button onClick={() => navigate(-1)} className="p-2 -ml-2 active:scale-90 transition-all">
-            <ArrowLeft size={24} className="text-gray-900" strokeWidth={2.5} />
-          </button>
-          <div>
-            <h1 className="text-[22px] font-black text-gray-900 leading-none tracking-tight">Bike Rentals</h1>
-            <p className="text-[12px] font-bold text-gray-400 mt-0.5 uppercase tracking-widest">Self-drive · No driver needed</p>
-          </div>
-        </div>
+    <div className="h-screen bg-bg-light max-w-lg mx-auto flex flex-col font-sans relative overflow-hidden">
+      {/* Header (Branded & Compact) */}
+      <header className="bg-[#001b33] px-5 py-5 flex items-center gap-4 border-b border-white/5 sticky top-0 z-30 shadow-2xl overflow-hidden shrink-0">
+         <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+         <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center active:scale-95 transition-all text-white relative z-10 font-bold">
+            <ArrowLeft size={16} strokeWidth={3} />
+         </button>
+         <div className="relative z-10">
+            <h1 className="text-[9px] font-bold text-white/30 uppercase tracking-[2px] leading-none mb-1 opacity-80">Autonomous Mobility</h1>
+            <h2 className="text-[17px] font-bold text-white leading-none tracking-tight uppercase">BIKE RENTALS</h2>
+         </div>
+      </header>
 
-        {/* Duration Tabs */}
-        <div className="flex gap-2 bg-gray-100 p-1.5 rounded-2xl">
-          {DURATION_TABS.map(tab => (
-            <button
-              key={tab}
-              onClick={() => setSelectedDuration(tab)}
-              className={`flex-1 py-2.5 rounded-xl text-[12px] font-black uppercase tracking-widest transition-all ${
-                selectedDuration === tab
-                  ? 'bg-white text-gray-900 shadow-md'
-                  : 'text-gray-400'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Info Banner */}
-      <div className="mx-5 mt-5 bg-blue-50 border border-blue-100 rounded-2xl p-4 flex items-start gap-3">
-        <Info size={18} className="text-blue-500 shrink-0 mt-0.5" strokeWidth={2.5} />
-        <div>
-          <p className="text-[12px] font-black text-blue-900">
-            {selectedDuration === 'Hourly' && 'Minimum 2 hours · Extra km charged ₹3/km'}
-            {selectedDuration === 'Half-Day' && '6 hours · Extra km charged ₹2.5/km'}
-            {selectedDuration === 'Daily' && '24 hours · Extra km charged ₹2/km · Free return pickup'}
-          </p>
-        </div>
-      </div>
-
-      {/* Vehicle Cards */}
-      <div className="px-5 mt-5 space-y-4">
-        {vehicles.map((v, idx) => (
-          <motion.div
-            key={v.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.07 }}
-            className="bg-white rounded-[32px] overflow-hidden border border-gray-50 shadow-sm"
-          >
-            {/* Card Top — Gradient + Image */}
-            <div className={`bg-gradient-to-r ${v.color} p-5 flex items-center justify-between`}>
-              <div className="space-y-2">
-                <span className={`text-[10px] font-black px-3 py-1 rounded-full border ${v.tagColor}`}>
-                  {v.tag}
-                </span>
-                <h3 className="text-[17px] font-black text-gray-900 leading-tight">{v.name}</h3>
-                <div className="flex items-center gap-1.5">
-                  <Star size={12} className="text-yellow-500 fill-yellow-400" />
-                  <span className="text-[12px] font-black text-gray-600">{v.rating}</span>
-                  <span className="text-[11px] font-bold text-gray-300 ml-1">· {v.kmLimit[selectedDuration]} limit</span>
-                </div>
-              </div>
-              <img src={v.image} alt={v.name} className="h-20 w-24 object-contain drop-shadow-md" />
+      <div className="flex-1 overflow-y-auto no-scrollbar pb-24">
+         {/* Duration Selector (Compact) */}
+         <div className="px-5 mt-5">
+            <div className="bg-white/5 border border-white/5 p-1 rounded-[20px] shadow-sm flex backdrop-blur-md">
+               {DURATION_TABS.map(tab => (
+                  <button
+                     key={tab}
+                     onClick={() => setSelectedDuration(tab)}
+                     className={`flex-1 py-2.5 rounded-[16px] text-[10px] font-bold uppercase tracking-[2px] transition-all duration-300 ${
+                        selectedDuration === tab
+                           ? 'bg-accent text-white shadow-lg'
+                           : 'text-gray-400 hover:text-[#001b33]'
+                     }`}
+                  >
+                     {tab}
+                  </button>
+               ))}
             </div>
+         </div>
 
-            {/* Card Bottom — Details + CTA */}
-            <div className="p-5 space-y-4">
-              <div className="flex flex-wrap gap-2">
-                {v.features.map(f => (
-                  <span key={f} className="text-[10px] font-black bg-gray-50 text-gray-500 px-2.5 py-1 rounded-full border border-gray-100">
-                    {f}
-                  </span>
-                ))}
-              </div>
+         {/* Info Banner (Sophisticated) */}
+         <div className="px-5 mt-5">
+            <div className="bg-[#001b33]/5 border border-[#001b33]/10 rounded-[28px] p-4 flex items-center gap-3">
+               <div className="w-8 h-8 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
+                  <Info size={16} strokeWidth={2.5} />
+               </div>
+               <p className="text-[10px] font-bold text-[#001b33]/60 uppercase tracking-[1.5px] leading-relaxed">
+                  {selectedDuration === 'Hourly' && 'Min 2 hours · Extra km @ ₹3/km'}
+                  {selectedDuration === 'Half-Day' && '6 hours · Extra km @ ₹2.5/km'}
+                  {selectedDuration === 'Daily' && '24 hours · Extra km @ ₹2/km · VIP return'}
+               </p>
+            </div>
+         </div>
 
-              <div className="flex items-center gap-2 text-[12px] font-bold text-gray-400">
-                <Fuel size={14} className="text-gray-300" />
-                <span>{v.fuel}</span>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div>
-                  <span className="text-[11px] font-black text-gray-400 uppercase tracking-widest block">Price</span>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-[26px] font-black text-gray-900 tracking-tighter">₹{v.prices[selectedDuration]}</span>
-                    <span className="text-[13px] font-bold text-gray-400">
-                      /{selectedDuration === 'Hourly' ? 'hr' : selectedDuration === 'Half-Day' ? '6hr' : 'day'}
-                    </span>
+         {/* Vehicle Cards (Branded) */}
+         <div className="px-5 mt-6 space-y-4">
+            {vehicles.map((v, idx) => (
+               <motion.div
+                  key={v.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="bg-white rounded-[36px] overflow-hidden border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.03)] group"
+               >
+                  <div className={`bg-gradient-to-br from-gray-50 to-white p-5 flex items-center justify-between relative`}>
+                     <div className="space-y-2.5 relative z-10">
+                        <div className={`text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-black/5 bg-white shadow-sm inline-block`}>
+                           {v.tag}
+                        </div>
+                        <h3 className="text-[18px] font-bold text-[#001b33] tracking-tight">{v.name}</h3>
+                        <div className="flex items-center gap-2">
+                           <div className="flex items-center gap-1.5 bg-yellow-50 px-2.5 py-1 rounded-lg">
+                              <Star size={10} className="text-yellow-600 fill-yellow-600" />
+                              <span className="text-[10px] font-black text-yellow-700">{v.rating}</span>
+                           </div>
+                           <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">· {v.kmLimit[selectedDuration]} LIMIT</span>
+                        </div>
+                     </div>
+                     <img src={v.image} alt={v.name} className="h-20 w-24 object-contain drop-shadow-2xl group-hover:scale-110 transition-transform duration-500" />
                   </div>
-                </div>
-                <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => navigate('/ride/select-location', { state: { isRental: true, vehicle: v, duration: selectedDuration } })}
-                  className="bg-[#1C2833] text-white px-6 py-3.5 rounded-2xl text-[13px] font-black uppercase tracking-widest flex items-center gap-2 shadow-xl active:scale-95 transition-all"
-                >
-                  Book Now <ChevronRight size={16} strokeWidth={3} />
-                </motion.button>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
 
-      {/* Safety Note */}
-      <div className="mx-5 mt-6 flex items-center gap-3 bg-gray-50 rounded-2xl p-4 border border-gray-100">
-        <Shield size={20} className="text-gray-400 shrink-0" />
-        <p className="text-[12px] font-bold text-gray-400 leading-relaxed">
-          All bikes are insured, regularly serviced, and GPS-tracked. Valid driving license required at pickup.
-        </p>
+                  <div className="p-5 space-y-5 border-t border-gray-50">
+                     <div className="flex flex-wrap gap-2">
+                        {v.features.map(f => (
+                           <span key={f} className="text-[9px] font-bold bg-[#001b33]/5 text-[#001b33]/60 px-3 py-1 rounded-full uppercase tracking-wider">
+                              {f}
+                           </span>
+                        ))}
+                     </div>
+
+                     <div className="flex items-center justify-between">
+                        <div>
+                           <p className="text-[9px] font-bold text-gray-300 uppercase tracking-[2.5px] mb-1">Standard Rate</p>
+                           <div className="flex items-baseline gap-1">
+                              <span className="text-[28px] font-bold text-[#001b33] tracking-tighter">₹{v.prices[selectedDuration]}</span>
+                              <span className="text-[12px] font-bold text-gray-400 uppercase tracking-widest">
+                                 /{selectedDuration === 'Hourly' ? 'Hr' : selectedDuration === 'Half-Day' ? '6Hr' : 'Day'}
+                              </span>
+                           </div>
+                        </div>
+                        <motion.button
+                           whileTap={{ scale: 0.96 }}
+                           onClick={() => navigate('/ride/select-location', { state: { isRental: true, vehicle: v, duration: selectedDuration } })}
+                           className="bg-[#001b33] text-white h-13 px-6 rounded-[22px] text-[11px] font-bold uppercase tracking-[2px] flex items-center gap-2 shadow-2xl active:scale-95 transition-all"
+                        >
+                           BOOK NOW <ChevronRight size={14} strokeWidth={3} />
+                        </motion.button>
+                     </div>
+                  </div>
+               </motion.div>
+            ))}
+         </div>
+
+         {/* Trust Note */}
+         <div className="mx-5 my-8 bg-gray-50/50 rounded-[28px] p-5 flex items-start gap-4 border border-gray-50">
+            <Shield size={20} className="text-gray-300 shrink-0 mt-1" />
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[1.5px] leading-relaxed">
+               All rental assets are insured, regularly logged, and GPS-tracked. Valid credentials mandatory at pickup.
+            </p>
+         </div>
       </div>
     </div>
   );

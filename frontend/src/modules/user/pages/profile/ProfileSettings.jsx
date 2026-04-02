@@ -9,77 +9,79 @@ const ProfileSettings = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] max-w-lg mx-auto flex flex-col font-sans relative">
-      <header className="bg-white px-5 py-8 flex items-center gap-6 border-b border-gray-50 shadow-sm sticky top-0 z-20">
-         <button onClick={() => navigate(-1)} className="p-2 -ml-2 active:scale-95 transition-all">
-            <ArrowLeft size={24} className="text-gray-900" strokeWidth={3} />
+    <div className="h-screen bg-bg-light max-w-lg mx-auto flex flex-col font-sans relative overflow-hidden">
+      <header className="bg-[#001b33] px-5 py-4 flex items-center gap-4 border-b border-white/5 sticky top-0 z-30 shadow-2xl overflow-hidden shrink-0">
+         <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+         <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center active:scale-95 transition-all text-white relative z-10 font-bold">
+            <ArrowLeft size={16} strokeWidth={3} />
          </button>
-         <div>
-            <h1 className="text-[20px] font-extrabold text-gray-900 tracking-tight leading-none uppercase tracking-widest text-xs opacity-50 mb-2">Settings</h1>
-            <h2 className="text-[17px] font-black text-gray-900 leading-none">Your Profile</h2>
+         <div className="relative z-10">
+            <h1 className="text-[9px] font-bold text-white/30 uppercase tracking-[2px] leading-none mb-1 opacity-80">Settings</h1>
+            <h2 className="text-[16px] font-bold text-white leading-none tracking-tight uppercase">User Profile</h2>
          </div>
       </header>
 
-      <div className="flex-1 p-5 space-y-10 overflow-y-auto no-scrollbar">
-         {/* AVATAR EDIT AREA */}
-         <div className="flex flex-col items-center gap-4 py-4">
-            <div className="relative group cursor-pointer">
-               <div className="w-[100px] h-[100px] rounded-[40px] bg-white p-1 border-2 border-primary/20 shadow-xl overflow-hidden active:scale-95 transition-all">
-                  <img src="https://ui-avatars.com/api/?name=Hritik+Raghuwanshi&background=E85D04&color=fff" className="w-(full h-full rounded-[34px] object-cover" alt="User" />
+      <div className="flex-1 p-5 space-y-4 overflow-hidden flex flex-col">
+         {/* AVATAR EDIT AREA (More Compact) */}
+         <div className="flex flex-col items-center gap-3 py-2 shrink-0">
+            <div className="relative group cursor-pointer active:scale-95 transition-all">
+               <div className="w-[85px] h-[85px] rounded-[36px] bg-white p-1 border-2 border-accent/10 shadow-lg overflow-hidden relative">
+                  <img src="https://ui-avatars.com/api/?name=Hritik+Raghuwanshi&background=001b33&color=fff" className="w-full h-full rounded-[28px] object-cover" alt="User" />
                </div>
-               <div className="absolute -bottom-1 -right-1 bg-white p-2 rounded-2xl shadow-xl border border-gray-50 text-primary">
-                  <Camera size={18} strokeWidth={3} />
+               <div className="absolute -bottom-1 -right-1 bg-[#001b33] p-2 rounded-xl shadow-2xl border-2 border-white text-accent">
+                  <Camera size={14} strokeWidth={3} />
                </div>
             </div>
          </div>
 
-         {/* FORM FIELDS - COMPACT */}
-         <div className="space-y-6">
-            <div className="space-y-2">
-               <label className="text-[12px] font-black text-gray-400 ml-1 uppercase tracking-widest">Full Name</label>
-               <div className="flex items-center gap-4 bg-white border border-gray-100 rounded-[28px] p-4 px-5 focus-within:border-primary transition-all shadow-sm">
-                  <User size={18} className="text-gray-300" />
+         {/* FORM FIELDS - HIGH DENSITY */}
+         <div className="space-y-3 flex-1">
+            <div className="space-y-1">
+               <label className="text-[9px] font-bold text-gray-400 ml-5 uppercase tracking-[1.5px] opacity-70">Identity</label>
+               <div className="flex items-center gap-3 bg-white border border-gray-100 rounded-[22px] p-3.5 px-6 focus-within:border-accent/40 transition-all group">
+                  <User size={16} className="text-gray-300 group-focus-within:text-accent transition-colors" strokeWidth={2.5} />
                   <input 
                      type="text" 
                      value={name}
                      onChange={(e) => setName(e.target.value)}
-                     className="flex-1 bg-transparent border-none text-[16px] font-black text-gray-950 focus:outline-none"
+                     className="flex-1 bg-transparent border-none text-[14px] font-bold text-[#001b33] focus:outline-none placeholder:text-gray-300"
                   />
-                  <CheckCircle2 size={16} className="text-green-500" />
+                  <CheckCircle2 size={14} className="text-emerald-500" strokeWidth={3} />
                </div>
             </div>
 
-            <div className="space-y-2">
-               <label className="text-[12px] font-black text-gray-400 ml-1 uppercase tracking-widest">Email Address</label>
-               <div className="flex items-center gap-4 bg-white border border-gray-100 rounded-[28px] p-4 px-5 focus-within:border-primary transition-all shadow-sm">
-                  <Mail size={18} className="text-gray-300" />
+            <div className="space-y-1">
+               <label className="text-[9px] font-bold text-gray-400 ml-5 uppercase tracking-[1.5px] opacity-70">Email</label>
+               <div className="flex items-center gap-3 bg-white border border-gray-100 rounded-[22px] p-3.5 px-6 focus-within:border-accent/40 transition-all group">
+                  <Mail size={16} className="text-gray-300 group-focus-within:text-accent transition-colors" strokeWidth={2.5} />
                   <input 
                      type="email" 
                      value={email}
                      onChange={(e) => setEmail(e.target.value)}
-                     className="flex-1 bg-transparent border-none text-[16px] font-black text-gray-950 focus:outline-none"
+                     className="flex-1 bg-transparent border-none text-[14px] font-bold text-[#001b33] focus:outline-none placeholder:text-gray-300"
                   />
                </div>
             </div>
 
-            <div className="space-y-2">
-               <label className="text-[12px] font-black text-gray-400 ml-1 uppercase tracking-widest">Phone Number</label>
-               <div className="flex items-center gap-4 bg-gray-50/50 border border-gray-50 rounded-[28px] p-4 px-5 shadow-sm opacity-80 cursor-not-allowed">
-                  <Smartphone size={18} className="text-gray-300" />
-                  <span className="flex-1 bg-transparent border-none text-[16px] font-black text-gray-400">+91 98765 43210</span>
-                  <div className="bg-green-100 text-green-700 text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-widest">Verified</div>
+            <div className="space-y-1">
+               <label className="text-[9px] font-bold text-gray-400 ml-5 uppercase tracking-[1.5px] opacity-70">Verified Mobile</label>
+               <div className="flex items-center gap-3 bg-gray-50/30 border border-gray-50 rounded-[22px] p-3.5 px-6 opacity-70 cursor-not-allowed">
+                  <Smartphone size={16} className="text-gray-300" strokeWidth={2.5} />
+                  <span className="flex-1 text-[14px] font-bold text-[#001b33]">91 98765 43210</span>
+                  <div className="bg-emerald-50 text-emerald-500 text-[8px] font-bold px-1.5 py-0.5 rounded-md uppercase tracking-wider border border-emerald-100/50">OK</div>
                </div>
             </div>
          </div>
       </div>
 
-      <div className="p-6 bg-white border-t border-gray-50 pb-10">
+      <div className="p-5 pb-8 bg-white border-t border-gray-50 shrink-0">
          <motion.button 
-            whileTap={{ scale: 0.98 }}
+            whileTap={{ scale: 0.97 }}
             onClick={() => navigate('/profile')}
-            className="w-full bg-[#1C2833] py-5 rounded-[28px] text-[18px] font-black text-white shadow-xl shadow-gray-200 active:bg-black transition-all"
+            className="w-full h-14 bg-[#001b33] rounded-[22px] text-[14px] font-bold text-white uppercase tracking-[2px] shadow-2xl transition-all active:scale-[0.98] flex items-center justify-center relative overflow-hidden"
          >
-            Save Changes
+            <div className="absolute top-0 right-0 w-24 h-24 bg-accent/10 rounded-full blur-2xl -mr-12 -mt-12"></div>
+            <span className="relative z-10">Update Profile</span>
          </motion.button>
       </div>
     </div>

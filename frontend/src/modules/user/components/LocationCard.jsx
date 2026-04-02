@@ -5,35 +5,32 @@ const LocationCard = ({ location = "Fetching location..." }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="px-5 my-2">
-      <div className="bg-white rounded-[24px] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-50 transition-transform active:scale-[0.98]" onClick={() => navigate('/ride/select-location')}>
-        <div className="flex items-start gap-4 mb-3">
-          <div className="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#E85D04">
-               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+    <div className="px-5 my-5">
+      <div className="bg-[#001b33] rounded-[32px] p-6 shadow-2xl border border-white/5 transition-all group active:scale-[0.98] cursor-pointer" onClick={() => navigate('/ride/select-location')}>
+        <div className="flex items-center gap-4 mb-5">
+          <div className="w-10 h-10 rounded-2xl bg-accent/20 flex items-center justify-center shrink-0 border border-accent/20">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-accent" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
+               <circle cx="12" cy="10" r="3"></circle>
             </svg>
           </div>
-          <div className="pointer-events-none">
-            <span className="text-[14px] text-gray-500 font-medium block">Pickup Location</span>
-            <span className="text-[17px] text-gray-900 font-bold block mt-0.5">{location}</span>
+          <div className="flex-1">
+            <span className="text-[12px] text-white/40 font-bold uppercase tracking-widest block">Where to?</span>
+            <span className="text-[19px] text-white font-bold block mt-0.5 group-hover:text-accent transition-colors leading-tight">
+              {location}
+            </span>
           </div>
         </div>
 
-        <div className="relative group pointer-events-none">
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A0AEC0" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-accent">
+             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <path d="M21 21l-4.35-4.35"></path>
              </svg>
           </div>
-          <div className="w-full bg-[#f6f7f9] border-none text-[16px] text-gray-400 font-semibold rounded-full py-4 pl-12 pr-12">
-            Where are you going ?
-          </div>
-          <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none opacity-50">
-             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4A5568" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-             </svg>
+          <div className="w-full bg-white/5 border border-white/10 group-hover:border-accent/30 group-hover:bg-white/10 transition-all text-[16px] text-white/40 font-bold rounded-2xl py-4.5 pl-14 pr-6">
+            Enter your destination...
           </div>
         </div>
       </div>

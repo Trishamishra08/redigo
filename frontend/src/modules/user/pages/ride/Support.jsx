@@ -23,60 +23,72 @@ const Support = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] max-w-lg mx-auto flex flex-col font-sans relative pb-32">
-      <header className="bg-white px-5 py-5 flex items-center gap-4 border-b border-gray-50 sticky top-0 z-20">
-         <button onClick={() => navigate(-1)} className="p-2 -ml-2 active:scale-90 transition-all">
-            <ArrowLeft size={22} className="text-gray-900" strokeWidth={3} />
+    <div className="h-screen bg-bg-light max-w-lg mx-auto flex flex-col font-sans relative overflow-hidden">
+      <header className="bg-[#001b33] px-5 py-5 flex items-center gap-4 border-b border-white/5 sticky top-0 z-30 shadow-2xl overflow-hidden shrink-0">
+         <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+         <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center active:scale-95 transition-all text-white relative z-10 font-bold">
+            <ArrowLeft size={16} strokeWidth={3} />
          </button>
-         <h1 className="text-[18px] font-black text-gray-900 tracking-tight">Help & Support</h1>
+         <div className="relative z-10">
+            <h1 className="text-[9px] font-bold text-white/30 uppercase tracking-[2px] leading-none mb-1 opacity-80">Crisis Desk</h1>
+            <h2 className="text-[17px] font-bold text-white leading-none tracking-tight uppercase">HELP & SUPPORT</h2>
+         </div>
       </header>
 
-      <div className="p-4 flex-1 space-y-4">
-         {/* Live Contact Options - More Compact */}
+      <div className="flex-1 p-5 space-y-4 overflow-y-auto no-scrollbar pb-24">
+         {/* Live Contact Options (Highly Compact) */}
          <div className="grid grid-cols-2 gap-3">
-            <motion.div 
-               whileTap={{ scale: 0.97 }}
-               onClick={handleChat}
-               className="bg-white border border-gray-100 rounded-[24px] p-4 shadow-sm flex flex-col items-center justify-center text-center gap-2 cursor-pointer group hover:border-primary transition-all"
-            >
-               <div className="w-10 h-10 bg-orange-50 text-primary rounded-xl flex items-center justify-center transition-colors group-hover:bg-primary group-hover:text-white">
-                  <MessageCircle size={20} strokeWidth={2.5} />
-               </div>
-               <span className="text-[13px] font-black text-gray-900 leading-tight">Live Chat</span>
-            </motion.div>
-            <motion.div 
-               whileTap={{ scale: 0.97 }}
-               onClick={handleCall}
-               className="bg-white border border-gray-100 rounded-[24px] p-4 shadow-sm flex flex-col items-center justify-center text-center gap-2 cursor-pointer group hover:border-blue-600 transition-all"
-            >
-               <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center transition-colors group-hover:bg-blue-600 group-hover:text-white">
-                  <Phone size={20} strokeWidth={2.5} />
-               </div>
-               <span className="text-[13px] font-black text-gray-900 leading-tight">Call Support</span>
-            </motion.div>
+            {[
+               { id: 'chat', label: 'Live Chat', icon: <MessageCircle size={22} />, color: 'accent', bg: 'accent/5', borderColor: 'accent/20' },
+               { id: 'call', label: 'Call Support', icon: <Phone size={22} />, color: 'emerald-500', bg: 'emerald-50', borderColor: 'emerald-500/20' }
+            ].map((contact, i) => (
+               <motion.div 
+                  key={i}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={contact.id === 'chat' ? handleChat : handleCall}
+                  className={`bg-white border border-gray-100 rounded-[28px] p-5 shadow-xl flex flex-col items-center justify-center text-center gap-2 cursor-pointer group active:bg-gray-50 transition-all border-b-4 border-${contact.borderColor}`}
+               >
+                  <div className={`w-10 h-10 bg-${contact.bg} text-${contact.color} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                     {contact.icon}
+                  </div>
+                  <span className="text-[13px] font-bold text-[#001b33] tracking-tight">{contact.label}</span>
+               </motion.div>
+            ))}
          </div>
 
-         {/* Common Help Topics Area */}
+         {/* Common Help Topics Area (High Density) */}
          <div className="pt-2">
-            <h3 className="text-[11px] font-black text-gray-400 mb-3 ml-1 uppercase tracking-widest opacity-60">Choose a Topic</h3>
-            <div className="space-y-2.5">
+            <div className="flex items-center justify-between mb-4 px-2">
+               <h3 className="text-[9px] font-bold text-gray-400 uppercase tracking-[2px] opacity-80">System Topics</h3>
+               <div className="flex items-center gap-1.5">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                  <span className="text-[8px] font-bold text-gray-300 uppercase tracking-widest">Active Support</span>
+               </div>
+            </div>
+            <div className="space-y-3">
                {helpTopics.map((topic, idx) => (
                   <motion.div 
                      key={idx} 
-                     whileTap={{ scale: 0.98 }}
+                     whileTap={{ scale: 0.99 }}
                      onClick={handleChat}
-                     className="bg-white border border-gray-50 rounded-[20px] p-3.5 flex items-center justify-between shadow-sm cursor-pointer group hover:border-primary/30 transition-all"
+                     className="bg-white border border-gray-50 rounded-[24px] p-3.5 flex items-center justify-between shadow-sm cursor-pointer group active:bg-gray-50 transition-all"
                   >
                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-lg bg-gray-50 flex items-center justify-center group-hover:bg-white transition-all">
+                        <div className="w-9 h-9 rounded-xl bg-gray-50/50 flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-all text-gray-400 shadow-inner">
                            {topic.icon}
                         </div>
-                        <span className="text-[14px] font-bold text-gray-800 tracking-tight group-hover:text-primary transition-colors">{topic.title}</span>
+                        <span className="text-[14px] font-bold text-[#001b33] tracking-tight">{topic.title}</span>
                      </div>
-                     <ChevronRight size={16} className="text-gray-300" strokeWidth={3} />
+                     <ChevronRight size={16} className="text-gray-200 group-hover:text-accent transition-all" strokeWidth={3} />
                   </motion.div>
                ))}
             </div>
+         </div>
+
+         {/* Trust Note */}
+         <div className="bg-[#001b33]/5 border border-[#001b33]/10 rounded-[28px] p-5 flex items-start gap-4">
+            <AlertCircle size={20} className="text-[#001b33]/40 shrink-0 mt-1" />
+            <p className="text-[10px] font-bold text-[#001b33]/50 uppercase tracking-[1.5px] leading-relaxed">Safety is our priority. In case of immediate emergency, please use the SOS button in your main menu.</p>
          </div>
       </div>
 
